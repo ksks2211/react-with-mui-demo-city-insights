@@ -10,7 +10,7 @@ export type PaletteKey =
   | "info"
   | "success"; // or use keyof typeof theme.palette
 
-const accentColor = "#2980b9";
+const ACCENT_COLOR = "#2980b9" as const;
 
 const commonStyles = css`
   :root {
@@ -21,7 +21,7 @@ const commonStyles = css`
     --footer-height: 8rem;
     --sidebar-width: 260px;
     --header-background: #f5f5f580;
-    --footer-background: ${darken(0.1, accentColor)}50;
+    --footer-background: ${darken(0.1, ACCENT_COLOR)}50;
     --content-background: #f5f5dc10;
     --navbar-background: #ffffff;
     --main-background: transparent;
@@ -30,7 +30,7 @@ const commonStyles = css`
     // colors
     --primary-color: ${orange[700]};
     --theme-bg-color: #f5f5dc;
-    --accent-color: ${accentColor};
+    --accent-color: ${ACCENT_COLOR};
   }
 
   @keyframes fade-in {
@@ -57,6 +57,13 @@ const commonStyles = css`
     }
     to {
       background-color: rgba(0, 0, 0, 0);
+    }
+  }
+
+  @keyframes ripple-effect {
+    to {
+      transform: scale(2.8);
+      opacity: 0;
     }
   }
 `;
@@ -91,7 +98,7 @@ export default function createThemeWithMode(mode: PaletteMode = "light") {
     typography: {
       fontFamily: ["Roboto", "Fredoka"].join(","),
     },
-    custom: { accentColor },
+    custom: { accentColor: ACCENT_COLOR },
     palette: { mode },
     components: {
       MuiCssBaseline: {

@@ -1,3 +1,4 @@
+import RippleBox from "components/containers/RippleBox";
 import Demographics from "pages/Demographics";
 import { Link, Route, Routes } from "react-router-dom";
 import { Header, Layout, Navbar } from "../components/layout";
@@ -13,7 +14,8 @@ const AppRoutes = () => {
           element={
             <div>
               <Link to="/demographics">demographics</Link>
-              <p>
+
+              <RippleBox backgroundColor="orange">
                 Aute deserunt exercitation nulla incididunt in occaecat deserunt
                 anim laboris sit reprehenderit. Culpa est nostrud laborum amet
                 consectetur laborum voluptate ipsum dolore nisi velit veniam.
@@ -31,7 +33,7 @@ const AppRoutes = () => {
                 adipisicing elit. Accusamus eveniet temporibus rerum qui, porro
                 necessitatibus velit delectus, id, sed ullam illo hic excepturi
                 explicabo alias et cupiditate deserunt libero maiores!
-              </p>
+              </RippleBox>
             </div>
           }
         />
