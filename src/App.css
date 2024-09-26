@@ -1,0 +1,6 @@
+button {
+  border: none;
+  /* Disable tap highlight on the overlay */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
