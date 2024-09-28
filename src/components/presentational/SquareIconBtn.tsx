@@ -12,13 +12,13 @@ interface SquareIconBtnProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const StyledSquareIconBtn = styled(Box)<{ "data-btn-color": string }>`
-  --common-white: ${(props) => props.theme.palette.common.white};
-  --background-color: ${(props) => props["data-btn-color"]};
-  --background-color-hover: ${(props) => darken(0.15, props["data-btn-color"])};
+  --common-white: ${({ theme }) => theme.palette.common.white};
+  --background-color: ${({ "data-btn-color": btnColor }) => btnColor};
+  --background-color-hover: ${({ "data-btn-color": btnColor }) =>
+    darken(0.15, btnColor)};
 
   width: 42px;
-  height: 42px;
-
+  aspect-ratio: 1 / 1;
   padding: 8px;
 
   cursor: pointer;

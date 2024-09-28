@@ -1,32 +1,22 @@
 import { extractStartAndEnd, formatNumberWithCommas } from "@utils/numberUtils";
-import { useGetDemographicsOfCity } from "hooks/queries/useCity";
+import QueryGuard from "components/guards/QueryGuard";
+import { useGetDemographicsOfCity } from "hooks";
 import { map } from "lodash-es";
 import { Link } from "react-router-dom";
-import ErrorFallback from "./ErrorFallbackPage";
+import { Demographic } from "shared/types";
 
 // Line Graph 넣기
 
 // Graph 라이브러리
 // Table 라이브러리
-export default function Demographics() {
-  const { data, isLoading, error, refetch } = useGetDemographicsOfCity("seoul");
 
-  if (isLoading) return <div>Loading....</div>;
+interface DemographicsProps {
+  data: Demographic;
+}
 
-  if (error)
-    return <ErrorFallback error={error} resetErrorBoundary={refetch} />;
-
-  if (data === undefined)
-    return (
-      <ErrorFallback
-        error={new Error("Not Found")}
-        resetErrorBoundary={refetch}
-      />
-    );
-
+function Demographics({ data }: DemographicsProps) {
   const populations = data.populations;
   const { startAt, endAt } = extractStartAndEnd(map(populations, "Year"));
-
   return (
     <div>
       <h1>
@@ -41,4 +31,9 @@ export default function Demographics() {
       <Link to="/">Main</Link>
     </div>
   );
+}
+
+export default function DemographicsWithGuard() {
+  const query = useGetDemographicsOfCity("seoul");
+  return <QueryGuard query={query} Component={Demographics} />;
 }

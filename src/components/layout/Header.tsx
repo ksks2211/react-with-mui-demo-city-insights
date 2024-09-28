@@ -2,6 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 import { orange } from "@mui/material/colors";
 import { HTMLAttributes } from "react";
 import { LuMenu } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   handleToggle: () => void;
@@ -68,33 +69,43 @@ const StyledMenuButton = styled("button")`
   &:hover::before {
     content: "Open Sidebar";
     position: absolute;
+    top: 100%;
+    left: calc(-1 * var(--left-gap) / 2);
+
     white-space: nowrap;
     font-size: 0.85rem;
     padding: 8px;
     color: ${(props) => props.theme.palette.common.white};
     border-radius: 5px;
     font-weight: 700;
-    top: 100%;
-    left: calc(-1 * var(--left-gap) / 2);
+
     background-color: ${(props) => props.theme.palette.grey[900]}e0;
 
     animation: show-up 0.3s forwards;
   }
 `;
 
+const typographyProps = {
+  fontFamily: ["Fredoka"],
+  fontSize: "1.6rem",
+  fontWeight: "700",
+  whiteSpace: "nowrap",
+  color: orange[900],
+  sx: { userSelect: "none", cursor: "pointer" },
+};
+
 export default function Header({ handleToggle, isLargeScreen }: HeaderProps) {
   const headerTitle = "City Insights";
 
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <StyledHeader>
-      <Typography
-        variant="h2"
-        fontFamily={["Fredoka"]}
-        fontSize="1.6rem"
-        fontWeight="700"
-        whiteSpace="nowrap"
-        color={orange[900]}
-      >
+      <Typography variant="h2" {...typographyProps} onClick={handleLogoClick}>
         {headerTitle}
       </Typography>
 

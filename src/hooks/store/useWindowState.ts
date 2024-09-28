@@ -89,6 +89,13 @@ export function useScrollBarWidth() {
 
     // Set the scrollbar width in state
     const width = getScrollbarWidth();
+
+    // css variable
+    document.documentElement.style.setProperty(
+      "--scrollbar-width",
+      `${width}px`
+    );
+
     // setScrollbarWidth(width);
     dispatch(setScrollBarWidth(width));
   }, [dispatch]); // Run once on component mount

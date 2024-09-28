@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import {
   setHeaderVisibility,
   setNav,
   setOverlayState,
 } from "../../redux/features/layoutState/layoutStateSlice";
+import { RootState } from "../../redux/store";
 
 export function useHeaderVisibility() {
   const isHeaderVisible = useSelector(

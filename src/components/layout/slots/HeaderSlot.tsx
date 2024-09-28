@@ -1,17 +1,17 @@
 import { Box, styled } from "@mui/material";
+import cn from "classnames";
 import { HTMLAttributes, useEffect, useState } from "react";
 import { useHeaderVisibility } from "../../../hooks/store/useLayoutState";
+
+// constants
+const THRESHOLD = 30;
 
 interface HeaderSlotProps extends HTMLAttributes<HTMLDivElement> {
   isSmallScreen: boolean;
   scrollY: number;
 }
 
-interface StyledHeaderSlot {
-  "data-header-visible": boolean;
-}
-
-const StyledHeaderSlot = styled(Box)<StyledHeaderSlot>`
+const StyledHeaderSlot = styled(Box)`
   width: 100%;
   min-height: var(--header-height);
 
@@ -21,14 +21,12 @@ const StyledHeaderSlot = styled(Box)<StyledHeaderSlot>`
 
   transition: transform 0.3s ease-in-out, min-height 0.3s ease-out;
 
-  transform: ${(props) =>
-    props["data-header-visible"]
-      ? "translateY(0)"
-      : "translateY(calc(-1 * var(--header-height)))"};
-`;
+  transform: translateY(0);
 
-// constants
-const THRESHOLD = 30;
+  &.hidden-header {
+    transform: translateY(calc(-1 * var(--header-height)));
+  }
+`;
 
 // hooks
 const useHideHeaderOnSmallScreen = (
@@ -86,7 +84,7 @@ export default function HeaderSlot({
   );
 
   return (
-    <StyledHeaderSlot data-header-visible={isHeaderVisible}>
+    <StyledHeaderSlot className={cn({ "hidden-header": !isHeaderVisible })}>
       {children}
     </StyledHeaderSlot>
   );

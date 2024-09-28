@@ -1,9 +1,4 @@
-import { Box, styled } from "@mui/material";
-import React from "react";
-
-interface FooterSlotProps extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string;
-}
+import { Box, BoxProps, styled } from "@mui/material";
 
 const StyledFooterSlot = styled(Box)`
   width: 100%;
@@ -11,6 +6,6 @@ const StyledFooterSlot = styled(Box)`
   min-height: var(--footer-height);
 `;
 
-export default function FooterSlot({ children }: FooterSlotProps) {
+export default function FooterSlot({ children }: BoxProps) {
   return <StyledFooterSlot>{children}</StyledFooterSlot>;
 }

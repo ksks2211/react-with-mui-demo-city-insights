@@ -1,25 +1,26 @@
 import { Box, styled } from "@mui/material";
-
+import cn from "classnames";
 interface MainSlotProps extends React.HTMLAttributes<HTMLDivElement> {
-  "data-large-screen": boolean;
+  isLargeScreen: boolean;
 }
 
-const StyledMainSlot = styled(Box)<MainSlotProps>`
+const StyledMainSlot = styled(Box)`
   background-color: var(--main-background);
   flex-grow: 1;
-
   height: 300vh;
+  margin-left: 0;
 
-  margin-left: ${(props) =>
-    props["data-large-screen"] ? "var(--sidebar-width)" : "0"};
+  transition: 0.3s;
 
-  //tmp
+  &.large-screen {
+    margin-left: var(--sidebar-width);
+  }
 `;
 
-export default function Main(props: MainSlotProps) {
+export default function Main({ isLargeScreen, children }: MainSlotProps) {
   return (
-    <StyledMainSlot data-large-screen={props["data-large-screen"]}>
-      {props.children}
+    <StyledMainSlot className={cn({ "large-screen": isLargeScreen })}>
+      {children}
     </StyledMainSlot>
   );
 }

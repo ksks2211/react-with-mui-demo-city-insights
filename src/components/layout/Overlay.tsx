@@ -2,7 +2,6 @@ import { Box, styled } from "@mui/material";
 import { HTMLAttributes } from "react";
 
 interface OverlayProps extends HTMLAttributes<HTMLDivElement> {
-  title?: string;
   overlayRef?: React.RefObject<HTMLDivElement>;
 }
 

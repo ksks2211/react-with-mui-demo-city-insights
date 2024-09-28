@@ -30,7 +30,7 @@ interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   Navbar: typeof Navbar;
 }
 
-// constants
+// 300 means .3s
 const TRANSITION_DURATION = 300;
 
 const StyledLayoutWrapper = styled(Box)<{ "data-scrollbar-width": number }>`
@@ -92,6 +92,11 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
 
   useLockBodyScroll(isNavOpen);
 
+  const handleCloseNavbar = () => {
+    closeNav();
+    closeOverlay();
+  };
+
   const handleToggle = () => {
     if (isNavOpen) {
       closeNav();
@@ -100,11 +105,6 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
       openNav();
       openOverlay();
     }
-  };
-
-  const handleCloseNavbar = () => {
-    closeNav();
-    closeOverlay();
   };
 
   return (
@@ -136,7 +136,7 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
 
         <ContentSlot>
           {/* Main Content */}
-          <MainSlot data-large-screen={isLargeScreen}>
+          <MainSlot isLargeScreen={isLargeScreen}>
             <Outlet />
           </MainSlot>
 

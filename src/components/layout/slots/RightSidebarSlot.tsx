@@ -1,9 +1,4 @@
-import { Box, styled } from "@mui/material";
-import { HTMLAttributes } from "react";
-
-interface RightSidebarSlotProps extends HTMLAttributes<HTMLDivElement> {
-  title?: string;
-}
+import { Box, BoxProps, styled } from "@mui/material";
 
 const StyledRightSidebarSlot = styled(Box)`
   width: var(--sidebar-width);
@@ -11,6 +6,6 @@ const StyledRightSidebarSlot = styled(Box)`
   flex-grow: 0;
 `;
 
-export default function RightSidebarSlot({ children }: RightSidebarSlotProps) {
+export default function RightSidebarSlot({ children }: BoxProps) {
   return <StyledRightSidebarSlot>{children}</StyledRightSidebarSlot>;
 }

@@ -1,11 +1,11 @@
 import { Box, styled } from "@mui/material";
+import cn from "classnames";
 import { HTMLAttributes } from "react";
-
 interface LeftNavbarSlotProps extends HTMLAttributes<HTMLDivElement> {
   isNavbarOpen: boolean;
 }
 
-const StyledNavbar = styled(Box)<{ "data-navbar-open": boolean }>`
+const StyledNavbar = styled(Box)`
   position: fixed;
   top: 0;
 
@@ -18,10 +18,11 @@ const StyledNavbar = styled(Box)<{ "data-navbar-open": boolean }>`
 
   margin-left: calc(-1 * var(--sidebar-width));
 
-  transform: ${(props) =>
-    props["data-navbar-open"]
-      ? "translateX(var(--sidebar-width))"
-      : "translateX(0)"};
+  transform: translateX(0);
+
+  &.navbar-open {
+    transform: translateX(var(--sidebar-width));
+  }
 
   transition: transform 0.3s ease-out;
 `;
@@ -31,6 +32,8 @@ export default function LeftNavbarSlot({
   children,
 }: LeftNavbarSlotProps) {
   return (
-    <StyledNavbar data-navbar-open={isNavbarOpen}>{children}</StyledNavbar>
+    <StyledNavbar className={cn({ "navbar-open": isNavbarOpen })}>
+      {children}
+    </StyledNavbar>
   );
 }
