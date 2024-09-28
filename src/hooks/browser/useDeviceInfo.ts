@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type BrowserName =
   | "Firefox"
@@ -82,43 +82,4 @@ export const useDeviceInfo = () => {
   }, []);
 
   return deviceInfo;
-};
-
-export const useScrollbarWidth = () => {
-  const [scrollbarWidth, setScrollbarWidth] = useState<number>(0);
-
-  useEffect(() => {
-    const getScrollbarWidth = () => {
-      // Create a temporary element
-      const outer = document.createElement("div");
-      outer.style.visibility = "hidden";
-      outer.style.overflow = "scroll"; // forces scrollbar to appear
-      outer.style.width = "100px"; // set a fixed width
-      document.body.appendChild(outer);
-
-      // Create an inner element and append it to the outer
-      const inner = document.createElement("div");
-      inner.style.width = "100%";
-      outer.appendChild(inner);
-
-      // Calculate the width difference between the outer and the inner
-      const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-
-      // Clean up
-      outer.parentNode?.removeChild(outer);
-
-      return scrollbarWidth;
-    };
-
-    // Set the scrollbar width in state
-    const width = getScrollbarWidth();
-    setScrollbarWidth(width);
-
-    document.documentElement.style.setProperty(
-      "--scrollbar-width",
-      `${width}px`
-    );
-  }, []); // Run once on component mount
-
-  return scrollbarWidth;
 };

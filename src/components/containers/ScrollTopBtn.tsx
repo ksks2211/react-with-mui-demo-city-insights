@@ -54,6 +54,7 @@ export default function ScrollTopBtn({
     <SquareIconBtn
       Icon={FaArrowUp}
       btnColor={(theme) => theme.custom.accentColor}
+      // btnColor={accentColor}
       sx={sx}
       onClick={handleClick}
     />

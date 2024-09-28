@@ -1,5 +1,12 @@
-export function formatNumber(n: number) {
+export function formatNumberWithCommas(n: number) {
   return new Intl.NumberFormat("en-US").format(n);
+}
+
+export function formatNumberToUnit(n: number) {
+  if (n < 1_000_000) {
+    return n.toLocaleString();
+  }
+  return (n / 1_000_000).toFixed(1) + "M";
 }
 
 export function extractStartAndEnd(arr: number[]) {

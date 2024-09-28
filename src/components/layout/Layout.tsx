@@ -1,4 +1,6 @@
 import { Box, styled } from "@mui/material";
+import cn from "classnames";
+import { useScrollBarWidth } from "hooks";
 import { HTMLAttributes, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
@@ -27,22 +29,19 @@ interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   Header: typeof Header;
   Navbar: typeof Navbar;
 }
-interface StyledLayoutWrapperProps {
-  "data-transition-duration": number;
-  "data-navbar-open": boolean;
-}
 
 // constants
 const TRANSITION_DURATION = 300;
 
-const StyledLayoutWrapper = styled(Box)<StyledLayoutWrapperProps>`
-  --transition-duration: ${(props) => props["data-transition-duration"]}ms;
+const StyledLayoutWrapper = styled(Box)<{ "data-scrollbar-width": number }>`
+  --transition-duration: ${TRANSITION_DURATION}ms;
   position: relative;
-
   height: 100%;
 
-  margin-right: ${(props) =>
-    props["data-navbar-open"] ? "var(--scrollbar-width)" : "0"};
+  margin-right: 0;
+  &.navbar-open {
+    margin-right: ${(props) => props["data-scrollbar-width"]}px;
+  }
 
   transition: 0s;
 
@@ -64,11 +63,13 @@ const StyledLayoutWrapper = styled(Box)<StyledLayoutWrapperProps>`
 
 const StyledLayout = styled(Box)<{ "data-small-screen": boolean }>`
   ${(props) => props["data-small-screen"] || largeScreenStyle}
+
   background-color: var(--background-color);
   width: 100%;
   position: relative;
   display: flex;
   flex-flow: column;
+  min-width: 300px;
 `;
 
 const ContentSlot = styled(Box)`
@@ -85,6 +86,7 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
   const { isNavOpen, closeNav, openNav } = useNavOpen();
   const { isOverlayOpen, closeOverlay, openOverlay } = useOverlay();
   const { scrollY } = useScrollY();
+  const { scrollBarWidth } = useScrollBarWidth();
 
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -107,8 +109,8 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
 
   return (
     <StyledLayoutWrapper
-      data-transition-duration={TRANSITION_DURATION}
-      data-navbar-open={isNavOpen}
+      className={cn({ "navbar-open": isNavOpen })}
+      data-scrollbar-width={scrollBarWidth}
     >
       {/* overlay */}
       <CSSTransition
@@ -129,11 +131,7 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
       <StyledLayout data-small-screen={isSmallScreen}>
         {/* Header */}
         <HeaderSlot isSmallScreen={isSmallScreen} scrollY={scrollY}>
-          <Header
-            handleToggle={handleToggle}
-            isNavOpen={isNavOpen}
-            isLargeScreen={isLargeScreen}
-          />
+          <Header handleToggle={handleToggle} isLargeScreen={isLargeScreen} />
         </HeaderSlot>
 
         <ContentSlot>

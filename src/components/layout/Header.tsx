@@ -5,7 +5,6 @@ import { LuMenu } from "react-icons/lu";
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   handleToggle: () => void;
-  isNavOpen: boolean;
   isLargeScreen: boolean;
 }
 
@@ -25,7 +24,7 @@ const StyledHeader = styled(Box)`
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
 `;
 
-const StyledMenuButton = styled("button")<{ "data-nav-open": boolean }>`
+const StyledMenuButton = styled("button")`
   --left-gap: 10px;
 
   position: absolute;
@@ -83,11 +82,7 @@ const StyledMenuButton = styled("button")<{ "data-nav-open": boolean }>`
   }
 `;
 
-export default function Header({
-  handleToggle,
-  isNavOpen,
-  isLargeScreen,
-}: HeaderProps) {
+export default function Header({ handleToggle, isLargeScreen }: HeaderProps) {
   const headerTitle = "City Insights";
 
   return (
@@ -97,6 +92,7 @@ export default function Header({
         fontFamily={["Fredoka"]}
         fontSize="1.6rem"
         fontWeight="700"
+        whiteSpace="nowrap"
         color={orange[900]}
       >
         {headerTitle}
@@ -105,7 +101,6 @@ export default function Header({
       <StyledMenuButton
         onClick={handleToggle}
         className="menu-btn"
-        data-nav-open={isNavOpen}
         data-large-screen={isLargeScreen}
       >
         <LuMenu />

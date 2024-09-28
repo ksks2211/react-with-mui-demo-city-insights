@@ -1,4 +1,6 @@
 import { Box, styled } from "@mui/material";
+import { useCssVariableColor } from "hooks";
+
 import { CgClose } from "react-icons/cg";
 
 interface NavbarProps {
@@ -47,6 +49,8 @@ const StyledNavbar = styled(Box)`
 `;
 
 export default function Navbar({ handleClose }: NavbarProps) {
+  const primaryColor = useCssVariableColor("--primary-color");
+
   return (
     <StyledNavbar>
       <button
@@ -55,7 +59,7 @@ export default function Navbar({ handleClose }: NavbarProps) {
       />
 
       <div className="navbar-main-area">
-        Main Area
+        Main Area (Color : {primaryColor})
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
           quaerat itaque minus fugiat mollitia eaque earum tenetur? Totam,

@@ -1,4 +1,4 @@
-import { extractStartAndEnd, formatNumber } from "@utils/numberUtils";
+import { extractStartAndEnd, formatNumberWithCommas } from "@utils/numberUtils";
 import { useGetDemographicsOfCity } from "hooks/queries/useCity";
 import { map } from "lodash-es";
 import { Link } from "react-router-dom";
@@ -34,7 +34,7 @@ export default function Demographics() {
       </h1>
       {populations.map((pop) => (
         <div key={pop.Year}>
-          {pop.Year} : {formatNumber(pop.Population)}
+          {pop.Year} : {formatNumberWithCommas(pop.Population)}
         </div>
       ))}
 
