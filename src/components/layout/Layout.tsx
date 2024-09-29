@@ -21,7 +21,6 @@ import {
   MainSlot,
   RightSidebarSlot,
 } from "./slots";
-
 // interfaces
 interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   Header: typeof Header;
@@ -48,10 +47,12 @@ const StyledLayoutWrapper = styled(Box)`
   }
   .overlay-exit {
     opacity: 1;
+    overflow-y: hidden;
   }
   .overlay-exit-active {
     opacity: 0;
     transition: opacity var(--transition-duration);
+    overflow-y: hidden;
   }
 `;
 
