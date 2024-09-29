@@ -2,7 +2,8 @@ import { extractStartAndEnd, formatNumberWithCommas } from "@utils/numberUtils";
 import QueryGuard from "components/guards/QueryGuard";
 import { useGetDemographicsOfCity, useLockBodyScroll, useModal } from "hooks";
 import { map } from "lodash-es";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Demographic } from "shared/types";
 
 // Line Graph 넣기
@@ -15,11 +16,43 @@ interface DemographicsProps {
 }
 
 function Demographics({ data }: DemographicsProps) {
-  const populations = data.populations;
+  const { populations } = data;
   const { startAt, endAt } = extractStartAndEnd(map(populations, "Year"));
 
-  const { openModal, isModalVisible } = useModal();
+  const { openModal, isModalVisible, closeModal } = useModal();
   useLockBodyScroll(isModalVisible);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+
+  // Clear search param id when modal is closed
+  useEffect(() => {
+    if (isModalVisible) {
+      return () => {
+        searchParams.delete("id");
+        navigate(`?${searchParams.toString()}`, { replace: true });
+      };
+    }
+  }, [isModalVisible, searchParams, navigate]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const id = searchParams.get("id");
+
+    if (id === null && isModalVisible) {
+      closeModal();
+    } else if (id !== null && !isModalVisible) {
+      openModal(<h3>What I passed to the modal</h3>);
+    }
+  }, [closeModal, isModalVisible, location.search, navigate, openModal]);
+
+  const handleClick = () => {
+    searchParams.set("id", "123");
+    navigate(`?${searchParams.toString()}`, { replace: false });
+  };
 
   return (
     <div>
@@ -33,13 +66,7 @@ function Demographics({ data }: DemographicsProps) {
       ))}
 
       <Link to="/">Main</Link>
-      <button
-        onClick={() => {
-          openModal(<h3>What I passed to the modal</h3>);
-        }}
-      >
-        Modal
-      </button>
+      <button onClick={handleClick}>Modal</button>
     </div>
   );
 }

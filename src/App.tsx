@@ -20,18 +20,18 @@ function App() {
   useListenScrollY();
 
   return (
-    <ModalProvider>
-      <QueryClientProvider client={queryClient}>
-        <ErrorBoundary FallbackComponent={ErrorFallbackPage}>
-          <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <ErrorBoundary FallbackComponent={ErrorFallbackPage}>
+        <BrowserRouter>
+          <ModalProvider>
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <AppRoutes />
             </ThemeProvider>
-          </BrowserRouter>
-        </ErrorBoundary>
-      </QueryClientProvider>
-    </ModalProvider>
+          </ModalProvider>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </QueryClientProvider>
   );
 }
 

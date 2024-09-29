@@ -1,4 +1,6 @@
 import { Box, BoxProps, styled } from "@mui/material";
+import { common } from "@mui/material/colors";
+import { rgba } from "polished";
 
 interface OverlayProps extends BoxProps {
   overlayRef?: React.RefObject<HTMLDivElement>;
@@ -7,11 +9,11 @@ interface OverlayProps extends BoxProps {
 const StyledOverlay = styled(Box)`
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
+
   z-index: 15;
   overflow-y: scroll;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${rgba(common.black, 0.5)};
+  /* backdrop-filter: blur(2px); */
 
   cursor: pointer;
 

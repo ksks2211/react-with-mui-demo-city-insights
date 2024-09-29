@@ -20,7 +20,7 @@ interface ModalProviderProps {
   children: React.ReactNode;
 }
 
-const DISTANCE_FROM_CORNER = "25px";
+const DISTANCE_FROM_CORNER = "18px";
 
 const ModalOverlay = styled(Overlay)`
   display: flex;
@@ -51,6 +51,9 @@ const ModalOverlay = styled(Overlay)`
 const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [content, setContent] = useState<ModalContent>(null);
+
+  // const location = useLocation();
+  // const navigate = useNavigate();
 
   const openModal = useCallback((content: React.ReactElement) => {
     setContent(content);
