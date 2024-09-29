@@ -1,14 +1,12 @@
-import { Box, styled, SxProps, Theme, useTheme } from "@mui/material";
+import { Box, BoxProps, styled, Theme, useTheme } from "@mui/material";
 import { darken } from "polished";
-import { HTMLAttributes } from "react";
 import type { IconType } from "react-icons";
 
 type Color = ((theme: Theme) => string) | string;
 
-interface SquareIconBtnProps extends HTMLAttributes<HTMLDivElement> {
+interface SquareIconBtnProps extends BoxProps {
   Icon: IconType;
   btnColor: Color;
-  sx?: SxProps<Theme>;
 }
 
 const StyledSquareIconBtn = styled(Box)<{ "data-btn-color": string }>`
@@ -35,9 +33,6 @@ const StyledSquareIconBtn = styled(Box)<{ "data-btn-color": string }>`
   &:hover {
     background-color: var(--background-color-hover);
   }
-
-  //  transition: 0.2s;
-
   svg {
     width: 100%;
     height: 100%;
@@ -50,12 +45,18 @@ export default function SquareIconBtn({
   btnColor,
   sx,
   onClick,
+  ...rest
 }: SquareIconBtnProps) {
   const theme = useTheme();
   const colorStr = typeof btnColor === "function" ? btnColor(theme) : btnColor;
 
   return (
-    <StyledSquareIconBtn data-btn-color={colorStr} sx={sx} onClick={onClick}>
+    <StyledSquareIconBtn
+      data-btn-color={colorStr}
+      sx={sx}
+      onClick={onClick}
+      {...rest}
+    >
       <Icon />
     </StyledSquareIconBtn>
   );

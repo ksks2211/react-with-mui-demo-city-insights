@@ -15,8 +15,8 @@ const ACCENT_COLOR = "#2980b9" as const;
 const commonStyles = css`
   :root {
     --header-height: 52px;
-    --icon-btn-size: 50px;
-    --icon-btn-padding: 12px;
+    --icon-btn-size: 40px;
+    --icon-btn-padding: 8px;
     --icon-color: ${darken(0.02, orange[900])};
     --footer-height: 8rem;
     --sidebar-width: 260px;

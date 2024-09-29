@@ -1,7 +1,6 @@
-import { Box, styled } from "@mui/material";
-import { HTMLAttributes } from "react";
+import { Box, BoxProps, styled } from "@mui/material";
 
-interface OverlayProps extends HTMLAttributes<HTMLDivElement> {
+interface OverlayProps extends BoxProps {
   overlayRef?: React.RefObject<HTMLDivElement>;
 }
 
@@ -25,9 +24,10 @@ export default function Overlay({
   children,
   overlayRef,
   onClick,
+  ...rest
 }: OverlayProps) {
   return (
-    <StyledOverlay ref={overlayRef} onClick={onClick}>
+    <StyledOverlay ref={overlayRef} onClick={onClick} {...rest}>
       {children}
     </StyledOverlay>
   );

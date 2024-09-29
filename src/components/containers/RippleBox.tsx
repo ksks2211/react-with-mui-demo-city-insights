@@ -11,7 +11,7 @@ const StyledRippleBox = styled(Box)<{ "data-bg-color": string }>`
   position: relative;
   overflow: hidden;
 
-  background-color: ${(props) => props["data-bg-color"]};
+  background-color: ${({ "data-bg-color": bgColor }) => bgColor};
 
   .ripple {
     position: absolute;
@@ -23,7 +23,8 @@ const StyledRippleBox = styled(Box)<{ "data-bg-color": string }>`
     animation: ripple-effect 0.5s ease-in;
 
     background: ${rgba(common.white, 0.25)};
-    box-shadow: 0 0 150px 10px ${(props) => darken(0.1, props["data-bg-color"])};
+    box-shadow: 0 0 150px 10px
+      ${({ "data-bg-color": bgColor }) => darken(0.1, bgColor)};
   }
 `;
 

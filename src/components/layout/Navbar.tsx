@@ -19,12 +19,10 @@ const StyledNavbar = styled(Box)`
   .navbar-close-btn {
     position: sticky;
     top: 0;
-
     height: var(--header-height);
+
     width: 100%;
-
     flex-shrink: 0;
-
     display: flex;
     align-items: center;
     justify-content: end;

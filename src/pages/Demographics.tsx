@@ -1,6 +1,6 @@
 import { extractStartAndEnd, formatNumberWithCommas } from "@utils/numberUtils";
 import QueryGuard from "components/guards/QueryGuard";
-import { useGetDemographicsOfCity } from "hooks";
+import { useGetDemographicsOfCity, useLockBodyScroll, useModal } from "hooks";
 import { map } from "lodash-es";
 import { Link } from "react-router-dom";
 import { Demographic } from "shared/types";
@@ -17,6 +17,10 @@ interface DemographicsProps {
 function Demographics({ data }: DemographicsProps) {
   const populations = data.populations;
   const { startAt, endAt } = extractStartAndEnd(map(populations, "Year"));
+
+  const { openModal, isModalVisible } = useModal();
+  useLockBodyScroll(isModalVisible);
+
   return (
     <div>
       <h1>
@@ -29,6 +33,13 @@ function Demographics({ data }: DemographicsProps) {
       ))}
 
       <Link to="/">Main</Link>
+      <button
+        onClick={() => {
+          openModal(<h3>What I passed to the modal</h3>);
+        }}
+      >
+        Modal
+      </button>
     </div>
   );
 }
