@@ -18,23 +18,14 @@ interface DemographicsProps {
 function Demographics({ data }: DemographicsProps) {
   const { populations } = data;
   const { startAt, endAt } = extractStartAndEnd(map(populations, "Year"));
-
-  const { openModal, isModalVisible, closeModal } = useModal();
+  const { openModal, isModalVisible, closeModal, setIsUserTriggered } =
+    useModal();
   useLockBodyScroll(isModalVisible);
   const { search } = useLocation();
   const navigate = useNavigate();
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
 
-  // Clear search param id when modal is closed
-  useEffect(() => {
-    if (isModalVisible) {
-      return () => {
-        searchParams.delete("id");
-        navigate(`?${searchParams.toString()}`, { replace: true });
-      };
-    }
-  }, [isModalVisible, searchParams, navigate]);
-
+  // catch modal from search-params
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id");
@@ -46,9 +37,11 @@ function Demographics({ data }: DemographicsProps) {
     }
   }, [closeModal, isModalVisible, search, navigate, openModal]);
 
+  // throw modal to search-params
   const handleClick = () => {
     searchParams.set("id", "123");
     navigate(`?${searchParams.toString()}`, { replace: false });
+    setIsUserTriggered(true);
   };
 
   return (

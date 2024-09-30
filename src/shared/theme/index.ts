@@ -1,6 +1,6 @@
 import { createTheme, css, PaletteMode } from "@mui/material";
 import { common, orange } from "@mui/material/colors";
-import { darken } from "polished";
+import { darken, rgba } from "polished";
 
 export type PaletteKey =
   | "primary"
@@ -15,9 +15,8 @@ const ACCENT_COLOR = "#2980b9" as const;
 const commonStyles = css`
   :root {
     --header-height: 52px;
-    --icon-btn-size: 40px;
-    --icon-btn-padding: 8px;
-    --icon-color: ${darken(0.02, orange[900])};
+    --icon-btn-size: 35px;
+    --icon-btn-padding: 6.5px;
     --footer-height: 8rem;
     --sidebar-width: 260px;
     --header-background: #f5f5f580;
@@ -31,6 +30,24 @@ const commonStyles = css`
     --primary-color: ${orange[700]};
     --theme-bg-color: #f5f5dc;
     --accent-color: ${ACCENT_COLOR};
+  }
+
+  .text-hover-effect {
+    &:hover {
+      color: ${darken(0.02, orange[900])};
+    }
+  }
+
+  .icon-btn {
+    svg {
+      color: ${rgba(common.black, 0.7)};
+      fill: ${rgba(common.black, 0.7)};
+
+      &:hover {
+        color: ${darken(0.02, orange[900])};
+        fill: ${darken(0.02, orange[900])};
+      }
+    }
   }
 
   @keyframes fade-in {

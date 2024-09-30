@@ -5,6 +5,7 @@ import { rgba } from "polished";
 import { createContext, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 import { CgClose } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 
 type ModalContent = React.ReactElement | null;
 type ModalState = {
@@ -12,6 +13,7 @@ type ModalState = {
   content: ModalContent;
   openModal: (content: React.ReactElement) => void;
   closeModal: () => void;
+  setIsUserTriggered: (v: boolean) => void;
 };
 
 const ModalContext = createContext<ModalState | undefined>(undefined);
@@ -22,11 +24,13 @@ interface ModalProviderProps {
 
 const DISTANCE_FROM_CORNER = "18px";
 
+const ModalPortal = ({ children }: ModalProviderProps) =>
+  createPortal(children, document.getElementById("modal-root") as Element);
+
 const ModalOverlay = styled(Overlay)`
   display: flex;
   align-items: center;
   justify-content: center;
-
   animation: fade-in 0.3s forwards;
 
   .modal-close-btn {
@@ -44,7 +48,7 @@ const ModalOverlay = styled(Overlay)`
       border-radius: 50%;
 
       &:hover {
-        background-color: ${rgba(common.black, 0.5)};
+        background-color: ${rgba(common.black, 0.24)};
       }
     }
   }
@@ -53,9 +57,10 @@ const ModalOverlay = styled(Overlay)`
 const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [content, setContent] = useState<ModalContent>(null);
+  const [isUserTriggered, setIsUserTriggered] = useState(false);
 
   // const location = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const openModal = useCallback((content: React.ReactElement) => {
     setContent(content);
@@ -67,21 +72,35 @@ const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     setModalVisible(false);
   }, []);
 
+  const handleCloseBtn = () => {
+    if (isUserTriggered) {
+      navigate(-1);
+    } else {
+      navigate(location.pathname, { replace: true });
+    }
+  };
+
   return (
     <ModalContext.Provider
-      value={{ isModalVisible, content, openModal, closeModal }}
+      value={{
+        isModalVisible,
+        content,
+        openModal,
+        closeModal,
+        setIsUserTriggered,
+      }}
     >
-      {isModalVisible &&
-        createPortal(
+      {isModalVisible && (
+        <ModalPortal>
           <ModalOverlay>
             <div className="modal-content">{content}</div>
             <button
               className="modal-close-btn"
-              children={<CgClose onClick={closeModal} />}
+              children={<CgClose onClick={handleCloseBtn} />}
             />
-          </ModalOverlay>,
-          document.getElementById("modal-root") as Element
-        )}
+          </ModalOverlay>
+        </ModalPortal>
+      )}
       {children}
     </ModalContext.Provider>
   );

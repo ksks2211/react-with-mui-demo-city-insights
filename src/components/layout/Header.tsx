@@ -30,23 +30,21 @@ const StyledMenuButton = styled("button")`
 
   position: absolute;
   left: var(--left-gap);
-  width: var(--icon-btn-size);
-  height: var(--icon-btn-size);
-  padding: var(--icon-btn-padding);
 
-  cursor: pointer;
   /* Disable tap highlight on the overlay */
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 
   border: none;
-  background-color: transparent;
+  cursor: pointer;
 
   svg {
-    width: 100%;
-    height: 100%;
-    color: var(--icon-color);
-    fill: var(--icon-color);
+    border-radius: 50%;
+    display: block;
+    backdrop-filter: blur(2px);
+    width: var(--icon-btn-size);
+    height: var(--icon-btn-size);
+    padding: var(--icon-btn-padding);
   }
 
   &:hover::after {
@@ -55,7 +53,7 @@ const StyledMenuButton = styled("button")`
     width: 12px;
 
     /* background-color: green; */
-    top: 100%;
+    top: 130%;
     left: 50%;
 
     /* border-top: 10px solid black; */
@@ -69,7 +67,7 @@ const StyledMenuButton = styled("button")`
   &:hover::before {
     content: "Open Sidebar";
     position: absolute;
-    top: 100%;
+    top: 130%;
     left: calc(-1 * var(--left-gap) / 2);
 
     white-space: nowrap;
@@ -111,7 +109,7 @@ export default function Header({ handleToggle, isLargeScreen }: HeaderProps) {
 
       <StyledMenuButton
         onClick={handleToggle}
-        className="menu-btn"
+        className="menu-btn icon-btn"
         data-large-screen={isLargeScreen}
       >
         <LuMenu />

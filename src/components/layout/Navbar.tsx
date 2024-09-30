@@ -1,4 +1,7 @@
 import { Box, styled } from "@mui/material";
+import { common } from "@mui/material/colors";
+import FoldableList from "components/containers/FoldableList";
+import { rgba } from "polished";
 import { useEffect, useRef } from "react";
 
 import { CgClose } from "react-icons/cg";
@@ -16,9 +19,9 @@ const StyledNavbar = styled(Box)`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow-y: auto;
+  overflow-y: scroll;
 
-  .navbar-close-btn {
+  .navbar-upper-area {
     position: sticky;
     top: 0;
     height: var(--header-height);
@@ -28,27 +31,63 @@ const StyledNavbar = styled(Box)`
     display: flex;
     align-items: center;
     justify-content: end;
+    z-index: 20;
 
-    svg {
+    .navbar-close-btn {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      width: var(--header-height);
       cursor: pointer;
 
-      border-radius: 50%;
-
-      backdrop-filter: blur(1px);
-
-      width: var(--icon-btn-size);
-      height: var(--icon-btn-size);
-      padding: var(--icon-btn-padding);
-      color: var(--icon-color);
-      fill: var(--icon-color);
+      svg {
+        border-radius: 50%;
+        display: block;
+        backdrop-filter: blur(2px);
+        background-color: ${rgba(common.black, 0.04)};
+        width: var(--icon-btn-size);
+        height: var(--icon-btn-size);
+        padding: var(--icon-btn-padding);
+      }
     }
   }
 
   .navbar-main-area {
-    flex-wrap: 1;
-    padding-bottom: calc(var(--header-height) * 2);
+    margin-bottom: calc(var(--header-height) * 2);
   }
 `;
+
+const NAVBAR_DATA = [
+  {
+    title: "asia",
+    link: "/asia",
+    items: [
+      { title: "seoul", link: "/cities/seoul" },
+      { title: "tokyo", link: "/cities/tokyo" },
+    ],
+  },
+  {
+    title: "europe",
+    link: "/europe",
+    items: [
+      { title: "london", link: "/cities/london" },
+      { title: "paris", link: "/cities/paris" },
+    ],
+  },
+
+  {
+    title: "north-america",
+    link: "/north-america",
+    items: [
+      { title: "toronto", link: "/cities/toronto" },
+      { title: "new-york", link: "/cities/new-york" },
+    ],
+  },
+];
+
+export type FOLDABLE_TYPE = (typeof NAVBAR_DATA)[number];
 
 export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -64,32 +103,20 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
 
   return (
     <StyledNavbar ref={navbarRef}>
-      <button
-        className="navbar-close-btn"
-        children={<CgClose onClick={handleClose} />}
+      <div
+        className="navbar-upper-area"
+        children={
+          <button
+            className="navbar-close-btn icon-btn"
+            children={<CgClose onClick={handleClose} />}
+          />
+        }
       />
 
       <div className="navbar-main-area">
-        Main Area
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
-          quaerat itaque minus fugiat mollitia eaque earum tenetur? Totam,
-          soluta! Error ab soluta aliquam pariatur? Voluptates veritatis fuga
-          tempore quos consectetur. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Quam, illum. Lorem ipsum dolor, sit amet consectetur
-          adipisicing elit. Vitae ea inventore, deleniti aliquid aliquam
-          laboriosam beatae. Repudiandae, ea possimus officia vitae labore sequi
-          dignissimos? Excepturi laboriosam iusto commodi corrupti sed harum
-          consectetur deleniti aspernatur quae dolore assumenda, enim cum qui
-          suscipit dignissimos voluptatibus esse recusandae unde ad! Expedita
-          est harum voluptatibus qui praesentium velit officiis alias optio
-          voluptates unde commodi, aut ex consequuntur reprehenderit ducimus
-          odit quia, cupiditate quisquam, voluptatum dolorem officia ab
-          blanditiis nobis! Cumque ipsum laudantium saepe molestiae sapiente
-          vero dolores, consectetur laboriosam architecto libero? Nemo incidunt
-          repellendus corporis sunt excepturi! Explicabo voluptatem deleniti
-          natus quidem est ducimus?
-        </p>
+        {NAVBAR_DATA.map((region, idx) => (
+          <FoldableList key={idx} data={region} handleNavClose={handleClose} />
+        ))}
       </div>
     </StyledNavbar>
   );
