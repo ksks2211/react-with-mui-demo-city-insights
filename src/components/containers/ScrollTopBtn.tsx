@@ -10,14 +10,14 @@ const iconBtnStyles = {
   position: "fixed",
   zIndex: 10,
   bottom: DISTANCE_FROM_CORNER,
-  left: `calc( 100vw - ${DISTANCE_FROM_CORNER} - var(--scrollbar-width))`,
+  right: DISTANCE_FROM_CORNER,
   transition: "bottom .3s, opacity .3s, transform .3s",
   WebkitTapHighlightColor: "transparent",
   WebkitTouchCallout: "none",
   opacity: 0,
-  transform: "translateY(100px) translateX(-100%)",
+  transform: "translateY(100px)",
   "&.btn-appear": {
-    transform: "translateY(0) translateX(-100%)",
+    transform: "translateY(0)",
     opacity: 1,
   },
 };

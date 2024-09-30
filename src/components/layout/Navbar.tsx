@@ -1,13 +1,15 @@
 import { Box, styled } from "@mui/material";
+import { useEffect, useRef } from "react";
 
 import { CgClose } from "react-icons/cg";
 
 interface NavbarProps {
   handleClose: () => void;
+  isNavbarOpen: boolean;
 }
 
 const StyledNavbar = styled(Box)`
-  height: 100vh;
+  height: 100%;
   width: var(--sidebar-width);
 
   background-color: var(--navbar-background);
@@ -27,10 +29,13 @@ const StyledNavbar = styled(Box)`
     align-items: center;
     justify-content: end;
 
-    background-color: var(--navbar-background);
-
     svg {
       cursor: pointer;
+
+      border-radius: 50%;
+
+      backdrop-filter: blur(1px);
+
       width: var(--icon-btn-size);
       height: var(--icon-btn-size);
       padding: var(--icon-btn-padding);
@@ -45,9 +50,20 @@ const StyledNavbar = styled(Box)`
   }
 `;
 
-export default function Navbar({ handleClose }: NavbarProps) {
+export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
+  const navbarRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const navbarElement = navbarRef.current;
+    if (navbarElement && isNavbarOpen) {
+      navbarElement.scrollTo({
+        top: 0,
+        behavior: "instant",
+      });
+    }
+  }, [isNavbarOpen]);
+
   return (
-    <StyledNavbar>
+    <StyledNavbar ref={navbarRef}>
       <button
         className="navbar-close-btn"
         children={<CgClose onClick={handleClose} />}

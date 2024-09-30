@@ -15,7 +15,7 @@ const StyledOverlay = styled(Box)`
   background-color: ${rgba(common.black, 0.5)};
   /* backdrop-filter: blur(2px); */
 
-  cursor: pointer;
+  /* cursor: pointer; */
 
   /* Disable tap highlight on the overlay */
   -webkit-tap-highlight-color: transparent;

@@ -27,6 +27,8 @@ const ModalOverlay = styled(Overlay)`
   align-items: center;
   justify-content: center;
 
+  animation: fade-in 0.3s forwards;
+
   .modal-close-btn {
     position: fixed;
     top: ${DISTANCE_FROM_CORNER};

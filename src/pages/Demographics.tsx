@@ -21,12 +21,9 @@ function Demographics({ data }: DemographicsProps) {
 
   const { openModal, isModalVisible, closeModal } = useModal();
   useLockBodyScroll(isModalVisible);
-  const location = useLocation();
+  const { search } = useLocation();
   const navigate = useNavigate();
-  const searchParams = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search]
-  );
+  const searchParams = useMemo(() => new URLSearchParams(search), [search]);
 
   // Clear search param id when modal is closed
   useEffect(() => {
@@ -47,7 +44,7 @@ function Demographics({ data }: DemographicsProps) {
     } else if (id !== null && !isModalVisible) {
       openModal(<h3>What I passed to the modal</h3>);
     }
-  }, [closeModal, isModalVisible, location.search, navigate, openModal]);
+  }, [closeModal, isModalVisible, search, navigate, openModal]);
 
   const handleClick = () => {
     searchParams.set("id", "123");

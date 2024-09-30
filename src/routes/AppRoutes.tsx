@@ -1,10 +1,23 @@
 import RippleBox from "components/containers/RippleBox";
 import Demographics from "pages/Demographics";
-import { Link, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { Header, Layout, Navbar } from "../components/layout";
 import NotFoundPage from "../pages/NotFoundPage";
 
+const useScrollToTheTopByPathname = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
+};
+
 const AppRoutes = () => {
+  useScrollToTheTopByPathname();
+
   return (
     <Routes>
       {/* pages with layout */}

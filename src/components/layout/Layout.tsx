@@ -111,11 +111,15 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
         unmountOnExit
         nodeRef={overlayRef}
       >
-        <Overlay onClick={handleCloseNavbar} overlayRef={overlayRef} />
+        <Overlay
+          onClick={handleCloseNavbar}
+          overlayRef={overlayRef}
+          sx={{ cursor: "pointer" }}
+        />
       </CSSTransition>
       {/* Navbar */}
       <LeftNavbarSlot isNavbarOpen={isNavOpen}>
-        <Navbar handleClose={handleCloseNavbar} />
+        <Navbar handleClose={handleCloseNavbar} isNavbarOpen={isNavOpen} />
       </LeftNavbarSlot>
 
       {/* main layout */}
