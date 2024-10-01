@@ -1,9 +1,10 @@
 import { Box, styled } from "@mui/material";
 import { common } from "@mui/material/colors";
+import cn from "classnames";
 import FoldableList from "components/containers/FoldableList";
+import { getMenuData, MENU_DATA } from "components/tmp/data";
 import { rgba } from "polished";
 import { useEffect, useRef } from "react";
-
 import { CgClose } from "react-icons/cg";
 
 interface NavbarProps {
@@ -20,6 +21,9 @@ const StyledNavbar = styled(Box)`
   flex-direction: column;
   position: relative;
   overflow-y: scroll;
+  &.navbar-open {
+    overflow-y: auto;
+  }
 
   .navbar-upper-area {
     position: sticky;
@@ -59,37 +63,11 @@ const StyledNavbar = styled(Box)`
   }
 `;
 
-const NAVBAR_DATA = [
-  {
-    title: "asia",
-    link: "/?continent=asia",
-    items: [
-      { title: "seoul", link: "/cities/seoul" },
-      { title: "tokyo", link: "/cities/tokyo" },
-    ],
-  },
-  {
-    title: "europe",
-    link: "/?continent=europe",
-    items: [
-      { title: "london", link: "/cities/london" },
-      { title: "paris", link: "/cities/paris" },
-    ],
-  },
-
-  {
-    title: "north-america",
-    link: "/?continent=north-america",
-    items: [
-      { title: "toronto", link: "/cities/toronto" },
-      { title: "new-york", link: "/cities/new-york" },
-    ],
-  },
-];
-
-export type FOLDABLE_TYPE = (typeof NAVBAR_DATA)[number];
+export type FOLDABLE_TYPE = (typeof MENU_DATA)[number];
 
 export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
+  const navbarData = getMenuData();
+
   const navbarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const navbarElement = navbarRef.current;
@@ -102,7 +80,10 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
   }, [isNavbarOpen]);
 
   return (
-    <StyledNavbar ref={navbarRef}>
+    <StyledNavbar
+      ref={navbarRef}
+      className={cn({ "navbar-open": isNavbarOpen })}
+    >
       <div
         className="navbar-upper-area"
         children={
@@ -114,8 +95,13 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
       />
 
       <div className="navbar-main-area">
-        {NAVBAR_DATA.map((region, idx) => (
-          <FoldableList key={idx} data={region} handleNavClose={handleClose} />
+        {navbarData.map((region, idx) => (
+          <FoldableList
+            key={idx}
+            data={region}
+            handleNavClose={handleClose}
+            initialIsOpen={idx === 0}
+          />
         ))}
       </div>
     </StyledNavbar>

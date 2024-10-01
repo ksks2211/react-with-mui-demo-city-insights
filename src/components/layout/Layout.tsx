@@ -63,16 +63,21 @@ const StyledLayout = styled(Box)<{ "data-small-screen": boolean }>`
   width: 100%;
   position: relative;
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
+
   min-width: 300px;
+
+  /* overflow: hidden; */
 `;
 
 const ContentSlot = styled(Box)`
   background-color: var(--content-background);
   flex-grow: 1;
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
   width: 100%;
+  height: 100%;
+  min-height: calc(100vh - var(--footer-height) - var(--header-height));
 `;
 ContentSlot.displayName = "ContentSlot";
 

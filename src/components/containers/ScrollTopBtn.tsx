@@ -15,9 +15,10 @@ const iconBtnStyles = {
   WebkitTapHighlightColor: "transparent",
   WebkitTouchCallout: "none",
   opacity: 0,
-  transform: "translateY(100px)",
+  transform: "scale(.2)",
+  borderRadius: "50%",
   "&.btn-appear": {
-    transform: "translateY(0)",
+    transform: "scale(1)",
     opacity: 1,
   },
 };

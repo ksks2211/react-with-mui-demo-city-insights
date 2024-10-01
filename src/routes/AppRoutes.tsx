@@ -3,9 +3,9 @@ import Demographics from "pages/Demographics";
 import { useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { Header, Layout, Navbar } from "../components/layout";
-import NotFoundPage from "../pages/NotFoundPage";
+import { MainPage, NotFoundPage } from "../pages";
 
-const useScrollToTheTopByPathname = () => {
+const useScrollToTopOnPathChange = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo({
@@ -16,14 +16,15 @@ const useScrollToTheTopByPathname = () => {
 };
 
 const AppRoutes = () => {
-  useScrollToTheTopByPathname();
+  useScrollToTopOnPathChange();
 
   return (
     <Routes>
       {/* pages with layout */}
       <Route path="/" element={<Layout Header={Header} Navbar={Navbar} />}>
+        <Route index element={<MainPage />} />
         <Route
-          index
+          path="example"
           element={
             <div>
               <Link to="/demographics">demographics</Link>

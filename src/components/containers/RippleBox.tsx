@@ -20,7 +20,7 @@ const StyledRippleBox = styled(Box)<{ "data-bg-color": string }>`
 
     pointer-events: none;
     transform: scale(0);
-    animation: ripple-effect 0.5s ease-in;
+    animation: ripple-effect 0.3s ease-in;
 
     background: ${rgba(common.white, 0.25)};
     box-shadow: 0 0 150px 10px

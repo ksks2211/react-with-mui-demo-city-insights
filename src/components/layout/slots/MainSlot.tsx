@@ -7,7 +7,7 @@ interface MainSlotProps extends React.HTMLAttributes<HTMLDivElement> {
 const StyledMainSlot = styled(Box)`
   background-color: var(--main-background);
   flex-grow: 1;
-  height: 300vh;
+  height: 100%;
   margin-left: 0;
 
   transition: 0.3s;

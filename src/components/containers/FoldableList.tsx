@@ -36,12 +36,16 @@ const StyledFoldableList = styled(Box)`
     .list-title {
       cursor: pointer;
 
+      flex-grow: 1;
+
       &:hover {
         text-decoration: underline;
       }
     }
 
     .toggle-btn {
+      flex-shrink: 0;
+      flex-grow: 0;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -81,11 +85,13 @@ const StyledFoldableList = styled(Box)`
 const FoldableList = ({
   data,
   handleNavClose,
+  initialIsOpen,
 }: {
   data: FOLDABLE_TYPE;
   handleNavClose: () => void;
+  initialIsOpen: boolean;
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(initialIsOpen);
   const navigate = useNavigate();
 
   const handleTitleLink = () => {

@@ -15,27 +15,17 @@ const StyledSquareIconBtn = styled(Box)<{ "data-btn-color": string }>`
   --background-color-hover: ${({ "data-btn-color": btnColor }) =>
     darken(0.15, btnColor)};
 
-  width: 42px;
-  aspect-ratio: 1 / 1;
-  padding: 8px;
-
   cursor: pointer;
-
-  border: 2px solid var(--common-white);
-  border-radius: 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   background-color: var(--background-color);
-
   &:hover {
     background-color: var(--background-color-hover);
   }
   svg {
-    width: 100%;
-    height: 100%;
+    border-radius: 50%;
+    display: block;
+    width: var(--icon-btn-size);
+    height: var(--icon-btn-size);
+    padding: var(--icon-btn-padding);
     fill: var(--common-white);
   }
 `;
