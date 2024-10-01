@@ -62,7 +62,7 @@ const StyledNavbar = styled(Box)`
 const NAVBAR_DATA = [
   {
     title: "asia",
-    link: "/asia",
+    link: "/?continent=asia",
     items: [
       { title: "seoul", link: "/cities/seoul" },
       { title: "tokyo", link: "/cities/tokyo" },
@@ -70,7 +70,7 @@ const NAVBAR_DATA = [
   },
   {
     title: "europe",
-    link: "/europe",
+    link: "/?continent=europe",
     items: [
       { title: "london", link: "/cities/london" },
       { title: "paris", link: "/cities/paris" },
@@ -79,7 +79,7 @@ const NAVBAR_DATA = [
 
   {
     title: "north-america",
-    link: "/north-america",
+    link: "/?continent=north-america",
     items: [
       { title: "toronto", link: "/cities/toronto" },
       { title: "new-york", link: "/cities/new-york" },

@@ -33,7 +33,7 @@ const StyledFoldableList = styled(Box)`
     align-items: center;
     justify-content: space-between;
 
-    .title {
+    .list-title {
       cursor: pointer;
 
       &:hover {
@@ -90,8 +90,8 @@ const FoldableList = ({
 
   const handleTitleLink = () => {
     // move to link
-    navigate("/");
-    // navigate(data.link);
+
+    navigate(data.link);
     // close navigation
     handleNavClose();
   };
@@ -99,7 +99,7 @@ const FoldableList = ({
   return (
     <StyledFoldableList>
       <div className="title-section row">
-        <h3 className="title text-hover-effect" onClick={handleTitleLink}>
+        <h3 className="list-title text-hover-effect" onClick={handleTitleLink}>
           {toTitleCase(data.title)}
         </h3>
         <button

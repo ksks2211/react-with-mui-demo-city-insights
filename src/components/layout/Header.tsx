@@ -26,7 +26,7 @@ const StyledHeader = styled(Box)`
 `;
 
 const StyledMenuButton = styled("button")`
-  --left-gap: 10px;
+  --left-gap: 8px;
 
   position: absolute;
   left: var(--left-gap);
@@ -41,7 +41,6 @@ const StyledMenuButton = styled("button")`
   svg {
     border-radius: 50%;
     display: block;
-    backdrop-filter: blur(2px);
     width: var(--icon-btn-size);
     height: var(--icon-btn-size);
     padding: var(--icon-btn-padding);
