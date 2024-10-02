@@ -22,8 +22,9 @@ function Demographics({ data }: DemographicsProps) {
     useModal();
   useLockBodyScroll(isModalVisible);
   const { search } = useLocation();
-  const navigate = useNavigate();
   const searchParams = useMemo(() => new URLSearchParams(search), [search]);
+
+  const navigate = useNavigate();
 
   // catch modal from search-params
   useEffect(() => {

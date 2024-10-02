@@ -1,5 +1,7 @@
 import { Box, Container, Grid2, styled } from "@mui/material";
+import { toTitleCase } from "@utils/stringUtils";
 import cn from "classnames";
+import ContainedImage from "components/containers/ContainedImage";
 import { getMenuData } from "components/tmp/data";
 import { useSearchParams } from "react-router-dom";
 function getItems() {
@@ -19,10 +21,14 @@ const useContinentSearchParam = () => {
 const CustomGrid2 = styled(Grid2)`
   &.invisible-item {
     width: 0;
-
+    opacity: 0;
     margin: 0;
     padding: 0;
-    opacity: 0;
+    overflow: hidden;
+  }
+
+  .photo-frame {
+    border-radius: 18px;
     overflow: hidden;
   }
 `;
@@ -33,15 +39,14 @@ export default function MainPage() {
 
   return (
     <Container maxWidth="md">
-      <h1>{continent}</h1>
+      <h1>{toTitleCase(continent)}</h1>
       <Grid2 container spacing={0} margin={1}>
         {items.map((item) => (
           <CustomGrid2
             key={item.title}
             size={{ xs: 12, sm: 6 }}
             sx={{
-              aspectRatio: "540/312",
-              transition: ".6s",
+              transition: " .7s ",
               padding: 1,
             }}
             className={cn({
@@ -51,11 +56,11 @@ export default function MainPage() {
             })}
           >
             <Box
-              sx={{ backgroundColor: "orange", height: "100%", width: "100%" }}
+              sx={{ height: "100%", width: "100%", aspectRatio: "540/312" }}
+              className="photo-frame"
             >
-              {item.title}
+              <ContainedImage src={item.img} alt={item.title} width="100%" />
             </Box>
-            {/* <img src={item.img} alt={item.title} /> */}
           </CustomGrid2>
         ))}
       </Grid2>
