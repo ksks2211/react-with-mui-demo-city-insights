@@ -17,7 +17,10 @@ const StyledImageWrapper = styled(Box)`
     justify-content: center;
     font-size: 1.1rem;
     font-weight: 700;
-    color: ${({ theme }) => theme.palette.grey[600]};
+    color: ${({ theme }) => theme.palette.common.white};
+
+    .alt-text {
+    }
   }
 
   .img-loading {
@@ -89,19 +92,12 @@ export default function ContainedImage({
           width="100%"
           height="100%"
           className="img-alt img-loading"
-        >
-          Loading...
-        </Skeleton>
+        />
       )}
       {isError && (
-        <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="100%"
-          className="img-alt img-error"
-        >
+        <Box width="100%" height="100%" className="img-alt img-error">
           Not Found...
-        </Skeleton>
+        </Box>
       )}
     </StyledImageWrapper>
   );

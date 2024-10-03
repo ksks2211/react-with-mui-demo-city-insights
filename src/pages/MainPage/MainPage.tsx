@@ -1,4 +1,5 @@
 import { Box, Container, Grid2, styled } from "@mui/material";
+import { BoxProps } from "@mui/system";
 import { toTitleCase } from "@utils/stringUtils";
 import cn from "classnames";
 import ContainedImage from "components/containers/ContainedImage";
@@ -33,20 +34,30 @@ const CustomGrid2 = styled(Grid2)`
   }
 `;
 
+const StyledHeader = styled(Box)<BoxProps>`
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+`;
+
 export default function MainPage() {
   const continent = useContinentSearchParam();
   const items = getItems();
 
   return (
     <Container maxWidth="md">
-      <h1>{toTitleCase(continent)}</h1>
+      <StyledHeader component="h1">
+        Continent : {toTitleCase(continent)}
+      </StyledHeader>
       <Grid2 container spacing={0} margin={1}>
         {items.map((item) => (
           <CustomGrid2
             key={item.title}
             size={{ xs: 12, sm: 6 }}
             sx={{
-              transition: " .7s ",
+              transition: ".8s",
               padding: 1,
             }}
             className={cn({
@@ -56,7 +67,12 @@ export default function MainPage() {
             })}
           >
             <Box
-              sx={{ height: "100%", width: "100%", aspectRatio: "540/312" }}
+              sx={{
+                height: "100%",
+                width: "100%",
+                aspectRatio: "540/312",
+                position: "relative",
+              }}
               className="photo-frame"
             >
               <ContainedImage src={item.img} alt={item.title} width="100%" />

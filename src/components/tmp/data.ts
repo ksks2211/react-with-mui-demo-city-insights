@@ -3,7 +3,7 @@ import { sortBy } from "lodash-es";
 export const MENU_DATA = [
   {
     title: "east-asia",
-    link: "/?continent=east-asia",
+    link: "?continent=east-asia",
     items: [
       {
         title: "seoul",
@@ -29,7 +29,7 @@ export const MENU_DATA = [
   },
   {
     title: "southeast-asia",
-    link: "/?continent=southeast-asia",
+    link: "?continent=southeast-asia",
     items: [
       {
         title: "singapore",
@@ -42,7 +42,7 @@ export const MENU_DATA = [
   },
   {
     title: "europe",
-    link: "/?continent=europe",
+    link: "?continent=europe",
     items: [
       {
         title: "london",
@@ -63,7 +63,7 @@ export const MENU_DATA = [
 
   {
     title: "north-america",
-    link: "/?continent=north-america",
+    link: "?continent=north-america",
     items: [
       {
         title: "toronto",
