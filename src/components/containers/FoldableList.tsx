@@ -1,12 +1,12 @@
 import { Box, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { toTitleCase } from "@utils/stringUtils";
+import cn from "classnames";
 import { FOLDABLE_TYPE } from "components/layout/Navbar";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-
 const ROW_HEIGHT = "46px";
 const LEFT_PADDING = "16px";
 
@@ -32,6 +32,17 @@ const StyledFoldableList = styled(Box)`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    &.selected::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2.4px;
+      height: 100%;
+      background-color: var(--accent-color);
+      transform: scaleY(0.75);
+    }
 
     .list-title {
       cursor: pointer;
@@ -86,13 +97,24 @@ const FoldableList = ({
   data,
   handleNavClose,
   initialIsOpen,
+  selectedCategory,
 }: {
   data: FOLDABLE_TYPE;
   handleNavClose: () => void;
   initialIsOpen: boolean;
+  selectedCategory?: string;
+  selectedSubCategory?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (selectedCategory === data.title) {
+      setIsOpen(true);
+    } else if (!initialIsOpen) {
+      setIsOpen(false);
+    }
+  }, [data.title, initialIsOpen, selectedCategory]);
 
   const handleTitleLink = () => {
     // move to link
@@ -104,8 +126,17 @@ const FoldableList = ({
 
   return (
     <StyledFoldableList>
-      <div className="title-section row">
-        <h3 className="list-title text-hover-effect" onClick={handleTitleLink}>
+      <div
+        className={cn("title-section row", {
+          selected: data.title === selectedCategory,
+        })}
+      >
+        <h3
+          className={cn("list-title", "text-hover-effect", {
+            selected: data.title === selectedCategory,
+          })}
+          onClick={handleTitleLink}
+        >
           {toTitleCase(data.title)}
         </h3>
         <button

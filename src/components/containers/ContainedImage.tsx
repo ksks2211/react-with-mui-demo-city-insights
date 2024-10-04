@@ -17,10 +17,7 @@ const StyledImageWrapper = styled(Box)`
     justify-content: center;
     font-size: 1.1rem;
     font-weight: 700;
-    color: ${({ theme }) => theme.palette.common.white};
-
-    .alt-text {
-    }
+    color: ${({ theme }) => theme.palette.grey[700]};
   }
 
   .img-loading {
@@ -92,7 +89,9 @@ export default function ContainedImage({
           width="100%"
           height="100%"
           className="img-alt img-loading"
-        />
+        >
+          Loading...
+        </Skeleton>
       )}
       {isError && (
         <Box width="100%" height="100%" className="img-alt img-error">

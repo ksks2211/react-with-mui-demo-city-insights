@@ -6,6 +6,7 @@ import { getMenuData, MENU_DATA } from "components/tmp/data";
 import { rgba } from "polished";
 import { useEffect, useRef } from "react";
 import { CgClose } from "react-icons/cg";
+import { useSearchParams } from "react-router-dom";
 
 interface NavbarProps {
   handleClose: () => void;
@@ -65,6 +66,14 @@ const StyledNavbar = styled(Box)`
 
 export type FOLDABLE_TYPE = (typeof MENU_DATA)[number];
 
+const useSelectedContinent = () => {
+  const [searchParams] = useSearchParams();
+
+  const continent = searchParams.get("continent");
+
+  return continent !== null ? continent : undefined;
+};
+
 export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
   const navbarData = getMenuData();
 
@@ -78,6 +87,8 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
       });
     }
   }, [isNavbarOpen]);
+
+  const selectedContinent = useSelectedContinent();
 
   return (
     <StyledNavbar
@@ -100,7 +111,10 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
             key={idx}
             data={region}
             handleNavClose={handleClose}
-            initialIsOpen={idx === 0}
+            initialIsOpen={
+              selectedContinent ? selectedContinent === region.title : idx === 0
+            }
+            selectedCategory={selectedContinent}
           />
         ))}
       </div>

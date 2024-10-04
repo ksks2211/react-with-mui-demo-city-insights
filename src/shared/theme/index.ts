@@ -42,8 +42,10 @@ const commonStyles = css`
     svg {
       color: ${rgba(common.black, 0.7)};
       fill: ${rgba(common.black, 0.7)};
+    }
 
-      &:hover {
+    &:hover {
+      svg {
         color: ${darken(0.02, orange[900])};
         fill: ${darken(0.02, orange[900])};
       }

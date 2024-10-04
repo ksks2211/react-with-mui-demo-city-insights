@@ -1,3 +1,4 @@
+import { findRegionByCity } from "@utils/arrayUtils";
 import {
   toKebabCase,
   toPascalCase,
@@ -25,4 +26,18 @@ test("test text case switching", () => {
   expect(kebabCase).toBe("camel-case");
   expect(pascalCase).toBe("CamelCase");
   expect(titleCase).toBe("Camel Case");
+});
+
+test("test find Region name with City name", () => {
+  let region = findRegionByCity("tokyo");
+
+  expect(region).toBe("east-asia");
+
+  region = findRegionByCity("london");
+
+  expect(region).toBe("europe");
+
+  region = findRegionByCity("not-registered");
+
+  expect(region).toBeNull();
 });
