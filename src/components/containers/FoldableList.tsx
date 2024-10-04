@@ -109,7 +109,10 @@ const FoldableList = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (selectedCategory === data.title) {
+    if (
+      selectedCategory === data.title ||
+      (!selectedCategory && initialIsOpen)
+    ) {
       setIsOpen(true);
     } else if (!initialIsOpen) {
       setIsOpen(false);

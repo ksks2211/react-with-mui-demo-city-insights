@@ -20,12 +20,6 @@ export const containerVariants = {
   },
 };
 
-export const boxStyles = {
-  height: "100%",
-  width: "100%",
-  aspectRatio: "540/312",
-  position: "relative",
-};
 export const customGrid2Props = {
   size: { xs: 12, sm: 6 },
   sx: {

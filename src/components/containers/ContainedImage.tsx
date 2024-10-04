@@ -30,7 +30,9 @@ const StyledImageWrapper = styled(Box)`
 `;
 
 const StyledContainedImage = styled("img")`
+  position: relative;
   object-fit: cover;
+  z-index: 1;
 `;
 
 export default function ContainedImage({
