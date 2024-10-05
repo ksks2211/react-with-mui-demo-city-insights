@@ -1,9 +1,7 @@
-import { Box, styled } from "@mui/material";
 import ScrollTopBtn from "components/containers/ScrollTopBtn";
-import { HTMLAttributes, useRef } from "react";
+import { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { largeScreenStyle } from "shared/theme";
 import {
   useBreakpoints,
   useLockBodyScroll,
@@ -11,8 +9,7 @@ import {
   useOverlay,
   useScrollY,
 } from "../../hooks";
-import type Header from "./Header";
-import Navbar from "./Navbar";
+import Footer from "./Footer";
 import Overlay from "./Overlay";
 import {
   FooterSlot,
@@ -21,65 +18,10 @@ import {
   MainSlot,
   RightSidebarSlot,
 } from "./slots";
-// interfaces
-interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
-  Header: typeof Header;
-  Navbar: typeof Navbar;
-}
-
+import { ContentSlot, StyledLayout, StyledLayoutWrapper } from "./styled";
+import { LayoutProps } from "./types";
 // 300 means .3s
-const TRANSITION_DURATION = 300;
-
-const StyledLayoutWrapper = styled(Box)`
-  --transition-duration: ${TRANSITION_DURATION}ms;
-  position: relative;
-  height: 100%;
-
-  margin-right: 0;
-  transition: 0s;
-
-  .overlay-enter {
-    opacity: 0;
-  }
-  .overlay-enter-active {
-    opacity: 1;
-    transition: opacity var(--transition-duration);
-  }
-  .overlay-exit {
-    opacity: 1;
-    overflow-y: hidden;
-  }
-  .overlay-exit-active {
-    opacity: 0;
-    transition: opacity var(--transition-duration);
-    overflow-y: hidden;
-  }
-`;
-
-const StyledLayout = styled(Box)<{ "data-small-screen": boolean }>`
-  ${(props) => props["data-small-screen"] || largeScreenStyle}
-
-  background-color: var(--background-color);
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  min-width: 300px;
-
-  /* overflow: hidden; */
-`;
-
-const ContentSlot = styled(Box)`
-  background-color: var(--content-background);
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  min-height: calc(100vh - var(--footer-height) - var(--header-height));
-`;
-ContentSlot.displayName = "ContentSlot";
+export const TRANSITION_DURATION = 300;
 
 const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
   const { isDownMd: isSmallScreen, isXl: isLargeScreen } = useBreakpoints();
@@ -145,7 +87,9 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
         </ContentSlot>
 
         {/* Footer */}
-        <FooterSlot>footer</FooterSlot>
+        <FooterSlot>
+          <Footer />
+        </FooterSlot>
       </StyledLayout>
 
       <ScrollTopBtn />

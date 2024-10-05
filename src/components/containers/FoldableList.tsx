@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { TargetedEvent } from "shared/types";
 const ROW_HEIGHT = "46px";
 const LEFT_PADDING = "16px";
 
@@ -93,6 +94,19 @@ const StyledFoldableList = styled(Box)`
   }
 `;
 
+const motionUlProps = {
+  initial: {
+    height: 0,
+    opacity: 0,
+  },
+  animate: {
+    height: "auto",
+    opacity: 1,
+  },
+  exit: { height: 0, opacity: 0 },
+  transition: { duration: 0.3, ease: "easeInOut" },
+};
+
 const FoldableList = ({
   data,
   handleNavClose,
@@ -108,6 +122,8 @@ const FoldableList = ({
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const navigate = useNavigate();
 
+  const isSelected = data.title === selectedCategory;
+
   useEffect(() => {
     if (
       selectedCategory === data.title ||
@@ -121,52 +137,45 @@ const FoldableList = ({
 
   const handleTitleLink = () => {
     // move to link
-
     navigate(data.link);
     // close navigation
     handleNavClose();
   };
 
+  const handleToggle = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const handleLink = ({ currentTarget }: TargetedEvent) => {
+    const city = currentTarget.dataset.city as string;
+    console.log(city);
+  };
+
   return (
     <StyledFoldableList>
-      <div
-        className={cn("title-section row", {
-          selected: data.title === selectedCategory,
-        })}
-      >
+      <div className={cn("title-section row", { selected: isSelected })}>
         <h3
           className={cn("list-title", "text-hover-effect", {
-            selected: data.title === selectedCategory,
+            selected: isSelected,
           })}
           onClick={handleTitleLink}
         >
           {toTitleCase(data.title)}
         </h3>
-        <button
-          className="toggle-btn icon-btn"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <button className="toggle-btn icon-btn" onClick={handleToggle}>
           {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </button>
       </div>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.ul
-            className="menu-items-area"
-            initial={{ height: 0, opacity: 0 }} // 시작
-            animate={{
-              height: "auto",
-              opacity: 1,
-            }} // 보여질때
-            exit={{ height: 0, opacity: 0 }} // 닫혀질때
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
+          <motion.ul className="menu-items-area" {...motionUlProps}>
             {data.items.map((item, idx) => (
               <li
                 key={idx}
-                onClick={() => {}}
+                onClick={handleLink}
                 className="menu-item row text-hover-effect"
+                data-city={item.title}
               >
                 {toTitleCase(item.title)}
               </li>

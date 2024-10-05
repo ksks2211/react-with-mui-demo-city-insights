@@ -5,7 +5,6 @@ import { useInView } from "react-intersection-observer";
 
 const StyledImageWrapper = styled(Box)`
   position: relative;
-  cursor: pointer;
   width: 100%;
   height: 100%;
 
@@ -35,6 +34,11 @@ const StyledContainedImage = styled("img")`
   z-index: 1;
 `;
 
+const useInViewOptions = {
+  triggerOnce: true,
+  threshold: 0.4,
+};
+
 export default function ContainedImage({
   src,
   ...rest
@@ -43,10 +47,7 @@ export default function ContainedImage({
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.4,
-  });
+  const { ref, inView } = useInView(useInViewOptions);
 
   const handleImageLoad = () => {
     setIsSuccess(true);
@@ -91,9 +92,7 @@ export default function ContainedImage({
           width="100%"
           height="100%"
           className="img-alt img-loading"
-        >
-          Loading...
-        </Skeleton>
+        />
       )}
       {isError && (
         <Box width="100%" height="100%" className="img-alt img-error">

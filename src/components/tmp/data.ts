@@ -41,6 +41,19 @@ export const MENU_DATA = [
     ],
   },
   {
+    title: "south-america",
+    link: "?continent=south-america",
+    items: [
+      {
+        title: "sao-paulo",
+        link: "/sao-paulo",
+        continent: "south-america",
+
+        img: "https://raw.githubusercontent.com/ksks2211/data/refs/heads/main/images/sao-paulo.jpg",
+      },
+    ],
+  },
+  {
     title: "europe",
     link: "?continent=europe",
     items: [

@@ -2,8 +2,13 @@ import { extractStartAndEnd, formatNumberWithCommas } from "@utils/numberUtils";
 import QueryGuard from "components/guards/QueryGuard";
 import { useGetDemographicsOfCity, useLockBodyScroll, useModal } from "hooks";
 import { map } from "lodash-es";
-import { useEffect, useMemo } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { Demographic } from "shared/types";
 
 // Line Graph 넣기
@@ -22,21 +27,21 @@ function Demographics({ data }: DemographicsProps) {
     useModal();
   useLockBodyScroll(isModalVisible);
   const { search } = useLocation();
-  const searchParams = useMemo(() => new URLSearchParams(search), [search]);
+  const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
   // catch modal from search-params
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id");
 
     if (id === null && isModalVisible) {
       closeModal();
     } else if (id !== null && !isModalVisible) {
+      console.log("Open modal");
       openModal(<h3>What I passed to the modal</h3>);
     }
-  }, [closeModal, isModalVisible, search, navigate, openModal]);
+  }, [closeModal, isModalVisible, search, navigate, openModal, searchParams]);
 
   // throw modal to search-params
   const handleClick = () => {

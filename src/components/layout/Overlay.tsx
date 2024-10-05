@@ -1,5 +1,6 @@
-import { Box, BoxProps, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { common } from "@mui/material/colors";
+import { BoxProps } from "@mui/system";
 import { rgba } from "polished";
 
 interface OverlayProps extends BoxProps {

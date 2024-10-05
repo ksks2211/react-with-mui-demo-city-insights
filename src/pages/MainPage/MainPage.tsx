@@ -1,11 +1,11 @@
-import { Box, Container, Grid2, styled } from "@mui/material";
-import { common } from "@mui/material/colors";
-import { BoxProps } from "@mui/system";
+import { Container, Grid2 } from "@mui/material";
 import { toTitleCase } from "@utils/stringUtils";
 import cn from "classnames";
 import ContainedImage from "components/containers/ContainedImage";
 import { motion } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
+import { TargetedEvent } from "shared/types";
+import { CustomGrid2, PhotoBox, StyledHeader } from "./styled";
 import {
   containerVariants,
   customGrid2Props,
@@ -21,107 +21,35 @@ const useContinentSearchParam = () => {
   return searchParams.get("continent") || "all";
 };
 
-const CustomGrid2 = styled(Grid2)`
-  &.invisible-item {
-    width: 0;
-    opacity: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .photo-frame {
-    border-radius: 18px;
-    overflow: hidden;
-  }
-`;
-
-const StyledHeader = styled(Box)<BoxProps>`
-  width: 100%;
-  text-align: center;
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-`;
 function validateItem(itemContinent: string, continent: string): boolean {
   return !(itemContinent === continent || continent === "all");
 }
-
-const PhotoBox = styled(Box)<BoxProps>`
-  --underline-thickness: 5px;
-  --text-color: ${common.white};
-
-  height: 100%;
-  width: 100%;
-  aspect-ratio: 540/312;
-  position: relative;
-
-  &.invisible-item {
-    .photo-caption {
-      font-size: 0;
-    }
-  }
-
-  .photo-caption {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.1);
-
-    transition: 0.5s ease-in-out;
-    cursor: pointer;
-    font-weight: 900;
-    font-size: 2rem;
-    z-index: 2;
-  }
-
-  .caption-text {
-    position: relative;
-    color: var(--text-color);
-
-    &::before {
-      display: block;
-      position: absolute;
-      content: "";
-      bottom: 0;
-      left: 0;
-
-      right: 100%;
-      background-color: var(--text-color);
-      transition: right 0.4s 0.1s ease-out;
-
-      border-bottom: var(--underline-thickness) solid var(--text-color);
-    }
-  }
-
-  &.underline-visible {
-    &:hover {
-      .caption-text::before {
-        opacity: 1;
-        right: 0;
-      }
-    }
-  }
-`;
 
 export default function MainPage() {
   const continent = useContinentSearchParam();
   const items = getItems();
 
+  const handleHoverStart = ({ currentTarget }: TargetedEvent) => {
+    currentTarget.classList.add("underline-visible");
+  };
+
+  const handleHoverEnd = ({ currentTarget }: TargetedEvent) => {
+    currentTarget.classList.remove("underline-visible");
+  };
+
   function handleImageClick(
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void {
     const imageContainerEl = e.currentTarget;
-
     const city = imageContainerEl.dataset.city;
+    handleHoverStart({ currentTarget: imageContainerEl });
 
     console.log(city);
   }
 
   return (
     <Container maxWidth="md">
-      <StyledHeader component="h1">
+      <StyledHeader component="h2">
         Continent : {toTitleCase(continent)}
       </StyledHeader>
 
@@ -146,18 +74,10 @@ export default function MainPage() {
                   })}
                   data-city={item.title}
                   onClick={handleImageClick}
-                  onTouchStart={(e) => {
-                    e.currentTarget.classList.add("underline-visible");
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.classList.add("underline-visible");
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.classList.remove("underline-visible");
-                  }}
-                  onTouchEnd={(e) => {
-                    e.currentTarget.classList.remove("underline-visible");
-                  }}
+                  onTouchStart={handleHoverStart}
+                  onMouseOver={handleHoverStart}
+                  onMouseOut={handleHoverEnd}
+                  onTouchEnd={handleHoverEnd}
                 >
                   <ContainedImage
                     src={item.img}

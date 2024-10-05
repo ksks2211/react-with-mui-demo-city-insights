@@ -1,4 +1,4 @@
-import { parseISO, format, formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow, parseISO } from "date-fns";
 
 export function formatDate(date: string) {
   const parsedDate = parseISO(date);
@@ -16,7 +16,6 @@ export function getCurrentDateInfo() {
 
   return {
     year: now.getFullYear(),
-    // Adding 1 to make the month more human-readable (1-12 instead of 0-11)
     month: now.getMonth() + 1,
     dateOfMonth: now.getDate(),
   };

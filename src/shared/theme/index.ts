@@ -17,14 +17,13 @@ const commonStyles = css`
     --header-height: 52px;
     --icon-btn-size: 35px;
     --icon-btn-padding: 6.5px;
-    --footer-height: 8rem;
+    --footer-height: 165px;
     --sidebar-width: 260px;
     --header-background: #f5f5f580;
     --footer-background: ${darken(0.1, ACCENT_COLOR)}50;
     --content-background: #f5f5dc10;
     --navbar-background: #ffffff;
     --main-background: transparent;
-    --footer-height: 8rem;
 
     // colors
     --primary-color: ${orange[700]};

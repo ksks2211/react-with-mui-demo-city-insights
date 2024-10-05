@@ -5,3 +5,4 @@ export interface Demographic {
 }
 
 export type City = (typeof CITIES)[number];
+export type TargetedEvent = { currentTarget: EventTarget & HTMLElement };

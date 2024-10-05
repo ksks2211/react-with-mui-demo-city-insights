@@ -2,8 +2,7 @@ import { Box, BoxProps, styled } from "@mui/material";
 
 const StyledFooterSlot = styled(Box)`
   width: 100%;
-  background-color: var(--footer-background);
-  min-height: var(--footer-height);
+  flex-shrink: 0;
 `;
 
 export default function FooterSlot({ children }: BoxProps) {
