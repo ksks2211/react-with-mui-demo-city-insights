@@ -1,13 +1,11 @@
 import cn from "classnames";
-import FoldableList from "components/containers/FoldableList";
-import { getMenuData, MENU_DATA } from "components/tmp/data";
+import { FoldableList } from "components/containers/FoldableList";
 import { useEffect, useRef } from "react";
 import { CgClose } from "react-icons/cg";
 import { useSearchParams } from "react-router-dom";
+import { getMenuData } from "shared/constants/menu";
 import { StyledNavbar } from "./styled";
 import { NavbarProps } from "./types";
-
-export type FOLDABLE_TYPE = (typeof MENU_DATA)[number];
 
 const useSelectedContinent = () => {
   const [searchParams] = useSearchParams();
@@ -19,7 +17,6 @@ const useSelectedContinent = () => {
 
 export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
   const navbarData = getMenuData();
-
   const navbarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const navbarElement = navbarRef.current;

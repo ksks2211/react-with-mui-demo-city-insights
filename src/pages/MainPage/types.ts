@@ -1,4 +1,4 @@
-import { getMenuData } from "components/tmp/data";
+import { getMenuData } from "shared/constants/menu";
 
 export function getItems() {
   const data = getMenuData();

@@ -1,5 +1,5 @@
-import { getMenuData } from "components/tmp/data";
 import { omit } from "lodash-es";
+import { getMenuData } from "shared/constants/menu";
 
 export function changeObjectKey<T extends { [key: string]: unknown }>(
   arr: T[],

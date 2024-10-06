@@ -1,6 +1,8 @@
 import { sortBy } from "lodash-es";
 
-export const MENU_DATA = [
+export type Continents = typeof MENU_DATA;
+
+const MENU_DATA = [
   {
     title: "east-asia",
     link: "?continent=east-asia",
@@ -103,7 +105,7 @@ export const MENU_DATA = [
   },
 ];
 
-function sortMenuData(data: typeof MENU_DATA) {
+function sortMenuData(data: Continents) {
   const sortedData = sortBy(data, "title").map((obj) => {
     return {
       ...obj,
@@ -114,6 +116,16 @@ function sortMenuData(data: typeof MENU_DATA) {
   return sortedData;
 }
 
-export function getMenuData() {
-  return sortMenuData(MENU_DATA);
+function createMenuData() {
+  let menu: Continents | undefined = undefined;
+
+  return function getMenuData() {
+    if (!menu) {
+      menu = sortMenuData(MENU_DATA);
+    }
+    return menu;
+  };
 }
+
+export const getMenuData = createMenuData();
+export type Continent = Continents[number];
