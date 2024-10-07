@@ -4,6 +4,7 @@ import cn from "classnames";
 import ContainedImage from "components/containers/ContainedImage";
 import { motion } from "framer-motion";
 import { useSelectedRegion } from "hooks";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TargetedEvent } from "shared/types";
 import { CustomGrid2, PhotoBox, StyledHeader } from "./styled";
@@ -18,10 +19,17 @@ function validateItem(itemContinent: string, continent: string): boolean {
   return itemContinent === continent || continent === "all";
 }
 
+const DURATION = 500;
+
 export default function MainPage() {
   const continent = useSelectedRegion() || "all";
   const items = getItems();
   const navigate = useNavigate();
+
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string | undefined>(
+    undefined
+  );
 
   const handleHoverStart = ({ currentTarget }: TargetedEvent) => {
     currentTarget.classList.add("underline-visible");
@@ -31,14 +39,22 @@ export default function MainPage() {
     currentTarget.classList.remove("underline-visible");
   };
 
-  function handleImageClick(
+  const handleImageClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ): void {
+  ) => {
+    if (isNavigating) return;
+    setIsNavigating(true);
+
     const imageContainerEl = e.currentTarget;
     const city = imageContainerEl.dataset.city;
+
+    setSelectedCity(city);
     handleHoverStart({ currentTarget: imageContainerEl });
-    navigate(`/${city}`);
-  }
+
+    setTimeout(() => {
+      navigate(`/${city}`);
+    }, DURATION);
+  };
 
   const filteredItems = items.filter((item) =>
     validateItem(item.continent, continent)
@@ -47,7 +63,7 @@ export default function MainPage() {
   return (
     <Container maxWidth="md">
       <StyledHeader component="h2">
-        Continent : {toTitleCase(continent)}
+        Region : {toTitleCase(continent)}
       </StyledHeader>
 
       <motion.ul
@@ -60,13 +76,16 @@ export default function MainPage() {
             <CustomGrid2 key={item.title} {...customGrid2Props}>
               <motion.li variants={itemVariants}>
                 <PhotoBox
-                  className={cn("photo-frame")}
+                  className={cn("photo-frame", {
+                    navigating: isNavigating && selectedCity === item.title,
+                  })}
                   data-city={item.title}
                   onClick={handleImageClick}
                   onTouchStart={handleHoverStart}
                   onMouseOver={handleHoverStart}
                   onMouseOut={handleHoverEnd}
                   onTouchEnd={handleHoverEnd}
+                  sx={{ transition: `${DURATION / 1000}s` }}
                 >
                   <ContainedImage
                     src={item.img}
@@ -74,7 +93,9 @@ export default function MainPage() {
                     width="100%"
                   />
                   <div className="photo-caption">
-                    <h3 className="caption-text">{toTitleCase(item.title)}</h3>
+                    <h3 className={cn("caption-text")}>
+                      {toTitleCase(item.title)}
+                    </h3>
                   </div>
                 </PhotoBox>
               </motion.li>

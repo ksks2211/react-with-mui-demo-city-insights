@@ -27,7 +27,7 @@ export const PhotoBox = styled(Box)<BoxProps>`
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.1);
 
-    transition: 0.5s ease-in-out;
+    transition: inherit;
     cursor: pointer;
     font-weight: 900;
     font-size: 2rem;
@@ -37,6 +37,7 @@ export const PhotoBox = styled(Box)<BoxProps>`
   .caption-text {
     position: relative;
     color: var(--text-color);
+    transition: inherit;
 
     &::before {
       display: block;
@@ -47,7 +48,7 @@ export const PhotoBox = styled(Box)<BoxProps>`
 
       right: 100%;
       background-color: var(--text-color);
-      transition: right 0.4s 0.1s ease-out;
+      transition: 0.5s ease-out;
 
       border-bottom: var(--underline-thickness) solid var(--text-color);
     }
@@ -60,6 +61,16 @@ export const PhotoBox = styled(Box)<BoxProps>`
         opacity: 1;
         right: 0;
       }
+    }
+  }
+
+  &.navigating {
+    .caption-text {
+      transform: scale(1.15);
+    }
+    .caption-text::before {
+      opacity: 1;
+      right: 0;
     }
   }
 `;

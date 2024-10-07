@@ -6,18 +6,27 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { Header, Layout, Navbar } from "../components/layout";
 import { MainPage, NotFoundPage } from "../pages";
 
-const useScrollToTopOnPathChange = () => {
+const useScrollReset = () => {
   const { pathname } = useLocation();
+
   useEffect(() => {
+    // Disable the browser's default scroll restoration on back/forward navigation
+    window.history.scrollRestoration = "manual";
+
     window.scrollTo({
       top: 0,
       behavior: "instant",
     });
+
+    // Re-enable scroll restoration when the component is unmounted
+    return () => {
+      window.history.scrollRestoration = "auto";
+    };
   }, [pathname]);
 };
 
 const AppRoutes = () => {
-  useScrollToTopOnPathChange();
+  useScrollReset();
 
   return (
     <Routes>
