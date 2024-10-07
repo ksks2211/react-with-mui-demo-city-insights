@@ -4,13 +4,6 @@ import { BoxProps } from "@mui/system";
 import { common } from "@mui/material/colors";
 
 export const CustomGrid2 = styled(Grid2)`
-  &.invisible-item {
-    width: 0;
-    opacity: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
   .photo-frame {
     border-radius: 18px;
     overflow: hidden;
@@ -57,13 +50,6 @@ export const PhotoBox = styled(Box)<BoxProps>`
       transition: right 0.4s 0.1s ease-out;
 
       border-bottom: var(--underline-thickness) solid var(--text-color);
-    }
-  }
-
-  // Hide text
-  &.invisible-item {
-    .photo-caption {
-      font-size: 0;
     }
   }
 

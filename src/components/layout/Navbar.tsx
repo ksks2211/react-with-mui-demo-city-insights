@@ -1,19 +1,11 @@
 import cn from "classnames";
 import { FoldableList } from "components/containers/FoldableList";
+import { useSelectedCity, useSelectedRegion } from "hooks";
 import { useEffect, useRef } from "react";
 import { CgClose } from "react-icons/cg";
-import { useSearchParams } from "react-router-dom";
-import { getMenuData } from "shared/constants/menu";
+import { getMenuData } from "shared/constants";
 import { StyledNavbar } from "./styled";
 import { NavbarProps } from "./types";
-
-const useSelectedContinent = () => {
-  const [searchParams] = useSearchParams();
-
-  const continent = searchParams.get("continent");
-
-  return continent !== null ? continent : undefined;
-};
 
 export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
   const navbarData = getMenuData();
@@ -28,7 +20,10 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
     }
   }, [isNavbarOpen]);
 
-  const selectedContinent = useSelectedContinent();
+  const regionBySearchParams = useSelectedRegion();
+  const { city, region: regionByPathVariable } = useSelectedCity();
+
+  const expectedRegion = regionBySearchParams || regionByPathVariable;
 
   return (
     <StyledNavbar
@@ -52,9 +47,10 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
             data={region}
             handleNavClose={handleClose}
             initialIsOpen={
-              selectedContinent ? selectedContinent === region.title : idx === 0
+              expectedRegion ? expectedRegion === region.title : idx === 0
             }
-            selectedCategory={selectedContinent}
+            selectedCategory={expectedRegion}
+            selectedSubCategory={city}
           />
         ))}
       </div>

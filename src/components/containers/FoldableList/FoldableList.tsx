@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { Continent } from "shared/constants/menu";
+import { Continent } from "shared/constants";
 import { TargetedEvent } from "shared/types";
 import { StyledFoldableList } from "./styled";
 
@@ -26,6 +26,7 @@ const FoldableList = ({
   handleNavClose,
   initialIsOpen,
   selectedCategory,
+  selectedSubCategory,
 }: {
   data: Continent;
   handleNavClose: () => void;
@@ -35,7 +36,6 @@ const FoldableList = ({
 }) => {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
   const navigate = useNavigate();
-
   const isSelected = data.title === selectedCategory;
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const FoldableList = ({
 
   const handleTitleLink = () => {
     // move to link
-    navigate(data.link);
+    navigate(`/${data.link}`);
     // close navigation
     handleNavClose();
   };
@@ -61,8 +61,11 @@ const FoldableList = ({
   };
 
   const handleLink = ({ currentTarget }: TargetedEvent) => {
-    const city = currentTarget.dataset.city as string;
-    console.log(city);
+    const sub = currentTarget.dataset.sub as string;
+    navigate(`/${sub}`);
+
+    // close navigation
+    handleNavClose();
   };
 
   return (
@@ -88,8 +91,10 @@ const FoldableList = ({
               <li
                 key={idx}
                 onClick={handleLink}
-                className="menu-item row text-hover-effect"
-                data-city={item.title}
+                className={cn("menu-item", "row", "text-hover-effect", {
+                  selected: item.title === selectedSubCategory,
+                })}
+                data-sub={item.title}
               >
                 {toTitleCase(item.title)}
               </li>

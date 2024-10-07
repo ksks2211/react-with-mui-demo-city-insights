@@ -1,4 +1,4 @@
-import { getMenuData } from "shared/constants/menu";
+import { getMenuData } from "shared/constants";
 
 export function getItems() {
   const data = getMenuData();
@@ -10,6 +10,7 @@ export const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
 };
+
 export const containerVariants = {
   hidden: { opacity: 0 },
   visible: {

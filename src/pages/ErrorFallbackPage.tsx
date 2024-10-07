@@ -12,10 +12,12 @@ export default function ErrorFallback({
     name = error.name;
   }
 
+  console.log(resetErrorBoundary);
   return (
     <div role="alert">
       <h1>{msg}</h1>
       <pre>{name}</pre>
+
       <button onClick={resetErrorBoundary}>reset</button>
     </div>
   );

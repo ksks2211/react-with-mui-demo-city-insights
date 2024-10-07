@@ -26,6 +26,7 @@ export const StyledFoldableList = styled(Box)`
     align-items: center;
     justify-content: space-between;
 
+    // highlight for selected menu
     &.selected::after {
       content: "";
       position: absolute;
@@ -82,6 +83,9 @@ export const StyledFoldableList = styled(Box)`
 
     &:hover {
       background-color: ${grey[100]};
+    }
+    &.selected {
+      font-weight: 700;
     }
   }
 `;
