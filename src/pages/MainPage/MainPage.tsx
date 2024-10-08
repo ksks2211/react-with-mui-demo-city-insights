@@ -20,6 +20,8 @@ function validateItem(itemContinent: string, continent: string): boolean {
 
 const DURATION = 500;
 
+const photoBoxStyles = { transition: `${DURATION / 1000}s` };
+
 export default function MainPage() {
   const continent = useSelectedRegion() || "all";
   const items = getItems();
@@ -60,7 +62,7 @@ export default function MainPage() {
   );
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ paddingBottom: "7rem" }}>
       <StyledHeader component="h2">
         Region : {toTitleCase(continent)}
       </StyledHeader>
@@ -84,7 +86,7 @@ export default function MainPage() {
                   onMouseOver={handleHoverStart}
                   onMouseOut={handleHoverEnd}
                   onTouchEnd={handleHoverEnd}
-                  sx={{ transition: `${DURATION / 1000}s` }}
+                  sx={photoBoxStyles}
                 >
                   <ContainedImage
                     src={item.img}
@@ -92,9 +94,7 @@ export default function MainPage() {
                     width="100%"
                   />
                   <div className="photo-caption">
-                    <h3 className={cn("caption-text")}>
-                      {toTitleCase(item.title)}
-                    </h3>
+                    <h3 className="caption-text">{toTitleCase(item.title)}</h3>
                   </div>
                 </PhotoBox>
               </motion.li>

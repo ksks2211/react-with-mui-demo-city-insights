@@ -21,7 +21,7 @@ const commonStyles = css`
     --sidebar-width: 260px;
     --header-background: #f5f5f580;
     --footer-background: ${darken(0.1, ACCENT_COLOR)}50;
-    --content-background: #f5f5dc10;
+    --content-background: #ffffff;
     --navbar-background: #ffffff;
     --main-background: transparent;
 

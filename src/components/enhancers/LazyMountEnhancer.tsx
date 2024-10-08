@@ -1,17 +1,16 @@
-import { Box, Skeleton } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useInView } from "react-intersection-observer";
 
 type LazyMountWrapperProps = {
-  children: React.ReactNode | ((hasMounted: boolean) => React.ReactNode);
+  children?: React.ReactNode | ((hasMounted: boolean) => React.ReactNode);
   width?: string;
   height?: string;
   threshold?: number;
 };
 
-const getSx = (width?: string, height?: string) => ({
+const getSx = (inView: boolean, width?: string, height?: string) => ({
   width: width || "100%",
-  height: height || "100%",
-  minHeight: height || "50px",
+  height: !inView ? height || "100%" : "100%",
 });
 
 export default function LazyMountEnhancer({
@@ -25,7 +24,7 @@ export default function LazyMountEnhancer({
     threshold: threshold || 0.3,
   });
 
-  const sx = getSx(width, height);
+  const sx = getSx(inView, width, height);
 
   if (typeof children === "function") {
     return (
@@ -37,7 +36,21 @@ export default function LazyMountEnhancer({
 
   return (
     <Box ref={ref} sx={sx}>
-      {inView ? children : <Skeleton sx={{ width: "100%", height: "100%" }} />}
+      {inView ? (
+        children
+      ) : (
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height,
+          }}
+        >
+          <CircularProgress color="success" size="3rem" />
+        </Box>
+      )}
     </Box>
   );
 }

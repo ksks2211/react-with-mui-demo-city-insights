@@ -11,7 +11,6 @@ export const StyledFooter = styled(Box)<BoxProps>`
   width: 100%;
   min-height: var(--footer-height);
 
-  margin-top: 10rem;
   background-color: var(--footer-background);
   display: flex;
   justify-content: center;

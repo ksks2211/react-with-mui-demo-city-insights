@@ -16,3 +16,8 @@ export function extractStartAndEnd(arr: number[]) {
   arr.sort();
   return { startAt: arr[0], endAt: arr[arr.length - 1] };
 }
+
+export function extractNumber(val: string) {
+  const mat = val.match(/\d+/) || ["0"];
+  return parseFloat(mat[0]);
+}
