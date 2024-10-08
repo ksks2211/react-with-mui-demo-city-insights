@@ -1,5 +1,5 @@
 import { Box, Grid2, styled } from "@mui/material";
-import { BoxProps } from "@mui/system";
+import type { BoxProps } from "@mui/system";
 
 import { common } from "@mui/material/colors";
 

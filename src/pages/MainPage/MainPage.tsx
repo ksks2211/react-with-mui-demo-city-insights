@@ -14,7 +14,6 @@ import {
   getItems,
   itemVariants,
 } from "./types";
-
 function validateItem(itemContinent: string, continent: string): boolean {
   return itemContinent === continent || continent === "all";
 }

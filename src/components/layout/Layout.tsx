@@ -9,7 +9,7 @@ import {
   useOverlay,
   useScrollY,
 } from "../../hooks";
-import Footer from "./Footer";
+
 import Overlay from "./Overlay";
 import {
   FooterSlot,
@@ -23,7 +23,7 @@ import { LayoutProps } from "./types";
 // 300 means .3s
 export const TRANSITION_DURATION = 300;
 
-const Layout: React.FC<LayoutProps> = ({ Header, Navbar }) => {
+const Layout: React.FC<LayoutProps> = ({ Header, Navbar, Footer }) => {
   const { isDownMd: isSmallScreen, isXl: isLargeScreen } = useBreakpoints();
   const { isNavOpen, closeNav, openNav } = useNavOpen();
   const { isOverlayOpen, closeOverlay, openOverlay } = useOverlay();

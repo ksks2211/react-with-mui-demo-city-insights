@@ -1,5 +1,6 @@
 import { orange } from "@mui/material/colors";
 import { HTMLAttributes } from "react";
+import Footer from "./Footer";
 import type Header from "./Header";
 import Navbar from "./Navbar";
 
@@ -18,6 +19,7 @@ export interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   Header: typeof Header;
   Navbar: typeof Navbar;
+  Footer: typeof Footer;
 }
 export interface NavbarProps {
   handleClose: () => void;

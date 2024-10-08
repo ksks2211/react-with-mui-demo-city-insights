@@ -1,4 +1,5 @@
 import RippleBox from "components/containers/RippleBox";
+import Footer from "components/layout/Footer";
 import CityDetailsPage from "pages/CityDetailsPage/CityDetailsPage";
 import Demographics from "pages/Demographics";
 import { useEffect } from "react";
@@ -31,7 +32,10 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* pages with layout */}
-      <Route path="/" element={<Layout Header={Header} Navbar={Navbar} />}>
+      <Route
+        path="/"
+        element={<Layout Header={Header} Navbar={Navbar} Footer={Footer} />}
+      >
         <Route index element={<MainPage />} />
         <Route path="/:city" element={<CityDetailsPage />} />
 

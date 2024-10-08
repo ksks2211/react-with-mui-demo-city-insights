@@ -198,3 +198,5 @@ export const StyledNavbar = styled(Box)`
     margin-bottom: calc(var(--header-height) * 2);
   }
 `;
+
+StyledNavbar.displayName = "StyledNavbar";
