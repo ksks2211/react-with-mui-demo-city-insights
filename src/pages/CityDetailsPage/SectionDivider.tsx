@@ -68,7 +68,8 @@ const SectionDivider = React.forwardRef<
   SectionDividerHandle,
   SectionDividerProps
 >(({ title, children, size = "md" }, ref) => {
-  const compoRef = useRef<HTMLDivElement>(null);
+  const moveToRef = useRef<HTMLSpanElement>(null);
+
   const accentColor = useCssVariableColor("--accent-color");
   const headerHeight = useCssVariableColor("--header-height");
 
@@ -76,9 +77,9 @@ const SectionDivider = React.forwardRef<
 
   useImperativeHandle(ref, () => ({
     moveTo: () => {
-      if (compoRef.current) {
+      if (moveToRef.current) {
         // 요소의 절대 위치를 계산하여 스크롤
-        const { top } = compoRef.current.getBoundingClientRect();
+        const { top } = moveToRef.current.getBoundingClientRect();
         const absoluteTop = window.scrollY + top - extractNumber(headerHeight);
         window.scrollTo({ top: absoluteTop, behavior: "smooth" });
       }
@@ -86,15 +87,18 @@ const SectionDivider = React.forwardRef<
   }));
 
   return (
-    <LazyMountEnhancer height={MIN_HEIGHT} threshold={0.5} key={title}>
-      <StyledSection sx={sx} ref={compoRef}>
-        <h2 className="section-title">
-          <span>{title}</span>
-        </h2>
+    <>
+      <span ref={moveToRef} />
+      <LazyMountEnhancer height={MIN_HEIGHT} threshold={0.5} key={title}>
+        <StyledSection sx={sx}>
+          <h2 className="section-title">
+            <span>{title}</span>
+          </h2>
 
-        <div className="section-content">{children}</div>
-      </StyledSection>
-    </LazyMountEnhancer>
+          <div className="section-content">{children}</div>
+        </StyledSection>
+      </LazyMountEnhancer>
+    </>
   );
 });
 

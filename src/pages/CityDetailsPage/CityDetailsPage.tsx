@@ -1,36 +1,72 @@
 import { toTitleCase } from "@utils/stringUtils";
-import { useSelectedCity } from "hooks";
-import { useRef } from "react";
+import { useSelectedCity, useTocNavigation } from "hooks";
+import { useEffect, useRef } from "react";
 import SectionDivider, { SectionDividerHandle } from "./SectionDivider";
 
 export default function CityDetailsPage() {
   const { city } = useSelectedCity();
-  const sectionRef = useRef<SectionDividerHandle>(null);
+  const sectionRefs = useRef<{ [key: string]: SectionDividerHandle }>({});
+  const { tocRef } = useTocNavigation();
+
+  // send moveTo function to context (eventually sidebar)
+  useEffect(() => {
+    const moveTo = (key: string) => {
+      if (sectionRefs.current && sectionRefs.current[key]) {
+        sectionRefs.current[key].moveTo();
+      }
+    };
+
+    tocRef.current = moveTo;
+
+    // clear
+    return () => {
+      tocRef.current = null;
+    };
+  }, [tocRef]);
 
   if (!city) {
     throw new Error("Invalid City");
   }
 
-  const handleClick = () => {
-    sectionRef.current?.moveTo();
+  const setRef = (el: SectionDividerHandle | null, key: string) => {
+    if (sectionRefs.current && el) sectionRefs.current[key] = el;
   };
 
   return (
     <>
-      <SectionDivider title={toTitleCase(city)} size="lg"></SectionDivider>
+      <SectionDivider
+        title={toTitleCase(city)}
+        size="lg"
+        ref={(el) => setRef(el, city)}
+      ></SectionDivider>
 
-      <SectionDivider title="Demographics" ref={sectionRef}></SectionDivider>
+      <SectionDivider
+        title="Demographics"
+        ref={(el) => setRef(el, "Demographics")}
+      ></SectionDivider>
 
-      <SectionDivider title="Economy"></SectionDivider>
-      <SectionDivider title="Climate"></SectionDivider>
+      <SectionDivider
+        title="Economy"
+        ref={(el) => setRef(el, "Economy")}
+      ></SectionDivider>
 
-      <SectionDivider title="Geography"></SectionDivider>
+      <SectionDivider
+        title="Climate"
+        ref={(el) => setRef(el, "Climate")}
+      ></SectionDivider>
 
-      <SectionDivider title="History"></SectionDivider>
-      <SectionDivider title="Gallery">
+      <SectionDivider
+        title="Geography"
+        ref={(el) => setRef(el, "Geography")}
+      ></SectionDivider>
+
+      <SectionDivider
+        title="History"
+        ref={(el) => setRef(el, "History")}
+      ></SectionDivider>
+      <SectionDivider title="Gallery" ref={(el) => setRef(el, "Gallery")}>
         The name of the city : {city}
       </SectionDivider>
-      <button onClick={handleClick}>Move To the Top</button>
     </>
   );
 }

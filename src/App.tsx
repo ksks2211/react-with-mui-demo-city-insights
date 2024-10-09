@@ -1,6 +1,7 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ModalProvider } from "contexts/ModalContext";
+import { TocNavigationProvider } from "contexts/TocNavigationContext";
 import { useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { HashRouter } from "react-router-dom";
@@ -24,10 +25,12 @@ function App() {
       <ErrorBoundary FallbackComponent={ErrorFallbackPage}>
         <HashRouter>
           <ModalProvider>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <AppRoutes />
-            </ThemeProvider>
+            <TocNavigationProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <AppRoutes />
+              </ThemeProvider>
+            </TocNavigationProvider>
           </ModalProvider>
         </HashRouter>
       </ErrorBoundary>

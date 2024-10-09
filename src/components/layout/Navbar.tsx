@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { FoldableList } from "components/containers/FoldableList";
+import FoldableList from "components/containers/FoldableList";
 import { useSelectedCity, useSelectedRegion } from "hooks";
 import { useEffect, useRef } from "react";
 import { CgClose } from "react-icons/cg";

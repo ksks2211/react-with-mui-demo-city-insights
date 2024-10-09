@@ -4,7 +4,7 @@ import CityDetailsPage from "pages/CityDetailsPage/CityDetailsPage";
 import Demographics from "pages/Demographics";
 import { useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
-import { Header, Layout, Navbar } from "../components/layout";
+import { Header, Layout, Navbar, Sidebar } from "../components/layout";
 import { MainPage, NotFoundPage } from "../pages";
 
 const useScrollReset = () => {
@@ -34,7 +34,14 @@ const AppRoutes = () => {
       {/* pages with layout */}
       <Route
         path="/"
-        element={<Layout Header={Header} Navbar={Navbar} Footer={Footer} />}
+        element={
+          <Layout
+            Header={Header}
+            Navbar={Navbar}
+            Footer={Footer}
+            Sidebar={Sidebar}
+          />
+        }
       >
         <Route index element={<MainPage />} />
         <Route path="/:city" element={<CityDetailsPage />} />

@@ -1,1 +1,1 @@
-export { default as FoldableList } from "./FoldableList.tsx";
+export { default } from "./FoldableList.tsx";

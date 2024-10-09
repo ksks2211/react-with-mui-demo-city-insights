@@ -1,7 +1,8 @@
 import { Box, BoxProps, styled } from "@mui/material";
 
 const StyledRightSidebarSlot = styled(Box)`
-  width: var(--sidebar-width);
+  position: relative;
+  flex-basis: var(--sidebar-width);
   flex-shrink: 0;
   flex-grow: 0;
 `;

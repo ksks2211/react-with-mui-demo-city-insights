@@ -8,6 +8,7 @@ import { CgClose } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 
 type ModalContent = React.ReactElement | null;
+
 type ModalState = {
   isModalVisible: boolean;
   content: ModalContent;
@@ -19,7 +20,7 @@ type ModalState = {
 const ModalContext = createContext<ModalState | undefined>(undefined);
 
 interface ModalProviderProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const DISTANCE_FROM_CORNER = "18px";
