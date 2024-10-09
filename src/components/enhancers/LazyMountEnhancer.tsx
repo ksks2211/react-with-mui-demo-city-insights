@@ -1,4 +1,5 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
+import LoadingBox from "components/presentational/LoadingBox";
 import { useInView } from "react-intersection-observer";
 
 type LazyMountWrapperProps = {
@@ -36,21 +37,7 @@ export default function LazyMountEnhancer({
 
   return (
     <Box ref={ref} sx={sx}>
-      {inView ? (
-        children
-      ) : (
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height,
-          }}
-        >
-          <CircularProgress color="success" size="3rem" />
-        </Box>
-      )}
+      {inView ? children : <LoadingBox size="3rem" height={height} />}
     </Box>
   );
 }

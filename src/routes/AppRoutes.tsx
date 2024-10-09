@@ -1,5 +1,6 @@
 import RippleBox from "components/containers/RippleBox";
 import Footer from "components/layout/Footer";
+import LoadingBox from "components/presentational/LoadingBox";
 import CityDetailsPage from "pages/CityDetailsPage/CityDetailsPage";
 import Demographics from "pages/Demographics";
 import { useEffect } from "react";
@@ -71,6 +72,7 @@ const AppRoutes = () => {
                 necessitatibus velit delectus, id, sed ullam illo hic excepturi
                 explicabo alias et cupiditate deserunt libero maiores!
               </RippleBox>
+              <LoadingBox />
             </div>
           }
         />

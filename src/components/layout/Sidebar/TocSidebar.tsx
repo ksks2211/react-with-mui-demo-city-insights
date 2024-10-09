@@ -3,25 +3,32 @@ import { useTocNavigation } from "hooks";
 import { useEffect, useRef } from "react";
 
 const StyledSidebar = styled(Box)`
-  --sidebar-margin-top: 5.2rem;
+  --sidebar-margin-top: 5.5rem;
   width: 100%;
 
   // stick to the top
   position: sticky;
   top: var(--header-height);
   margin-top: var(--sidebar-margin-top);
-  max-height: calc(100vh - var(--header-height) - var(--sidebar-margin-top));
 
-  overflow: auto;
-
-  padding: 3.5rem 1rem;
-
+  padding: 3.5rem 1rem 0 1rem;
   ul {
+    max-height: calc(100vh - var(--header-height) - var(--footer-height));
+    overflow: auto;
+
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+
+    padding: 1rem 0;
     li {
       cursor: pointer;
-      font-weight: 500;
-      font-size: 1.1rem;
-      padding: 0.5rem 0 0.5rem 1rem;
+      /* font-weight: 400; */
+      font-size: 1rem;
+      padding: 0.3rem 0 0.3rem 1rem;
+      color: ${({ theme }) => theme.palette.grey[700]};
+
+      &:hover {
+        font-weight: 700;
+      }
     }
   }
 `;

@@ -10,8 +10,6 @@ const StyledMainSlot = styled(Box)`
   height: 100%;
   margin-left: 0;
 
-  transition: 0.3s;
-
   &.large-screen {
     margin-left: var(--sidebar-width);
   }
