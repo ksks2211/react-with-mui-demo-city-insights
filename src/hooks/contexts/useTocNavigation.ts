@@ -8,7 +8,10 @@ const useTocNavigation = () => {
     throw new Error("Toc Navigation Context is not found!");
   }
 
-  return { tocRef: tocNavigationContext.tocHandlerRef };
+  const { tocHandlerRef, focusedSection, setFocusedSection } =
+    tocNavigationContext;
+
+  return { tocRef: tocHandlerRef, focusedSection, setFocusedSection };
 };
 
 export default useTocNavigation;

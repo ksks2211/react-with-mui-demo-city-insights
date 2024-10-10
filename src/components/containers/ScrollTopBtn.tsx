@@ -10,15 +10,17 @@ const iconBtnStyles = {
   position: "fixed",
   zIndex: 10,
   bottom: DISTANCE_FROM_CORNER,
-  right: DISTANCE_FROM_CORNER,
+  left: `calc(100vw - ${DISTANCE_FROM_CORNER} - var(--scrollbar-width))`,
   transition: "bottom .3s, opacity .3s, transform .3s",
   WebkitTapHighlightColor: "transparent",
   WebkitTouchCallout: "none",
   opacity: 0,
-  transform: "scale(.2)",
+  transform: "scale(.2) translateX(-100%)",
+  transformOrigin: "-50% 50%",
   borderRadius: "50%",
+
   "&.btn-appear": {
-    transform: "scale(1)",
+    transform: "scale(1.1) translateX(-100%)",
     opacity: 1,
   },
 };

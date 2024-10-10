@@ -1,14 +1,16 @@
+import { Box } from "@mui/material";
 import { toTitleCase } from "@utils/stringUtils";
-import { useSelectedCity, useTocNavigation } from "hooks";
-import { useEffect, useRef } from "react";
+import { useScrollY, useSelectedCity, useTocNavigation } from "hooks";
+import { useCallback, useEffect, useRef } from "react";
 import SectionDivider, { SectionDividerHandle } from "./SectionDivider";
 
 export default function CityDetailsPage() {
   const { city } = useSelectedCity();
   const sectionRefs = useRef<{ [key: string]: SectionDividerHandle }>({});
-  const { tocRef } = useTocNavigation();
+  const { tocRef, setFocusedSection } = useTocNavigation();
+  const { scrollY } = useScrollY();
 
-  // send moveTo function to context (eventually sidebar)
+  // attach moveTo function to context (eventually sidebar)
   useEffect(() => {
     const moveTo = (key: string) => {
       if (sectionRefs.current && sectionRefs.current[key]) {
@@ -24,16 +26,36 @@ export default function CityDetailsPage() {
     };
   }, [tocRef]);
 
+  // on scroll detect section in the main zone
+  useEffect(() => {
+    if (!sectionRefs.current) return;
+
+    for (const [title, handler] of Object.entries(sectionRefs.current)) {
+      const top = handler.readTop();
+      if (top > 20 && top < (window.innerHeight * 2) / 5) {
+        setFocusedSection(title);
+        break;
+      }
+    }
+  }, [scrollY, setFocusedSection]);
+
+  useEffect(() => {
+    setFocusedSection(city || null);
+    return () => {
+      setFocusedSection(null);
+    };
+  }, [city, setFocusedSection]);
+
   if (!city) {
     throw new Error("Invalid City");
   }
 
-  const setRef = (el: SectionDividerHandle | null, key: string) => {
+  const setRef = useCallback((el: SectionDividerHandle | null, key: string) => {
     if (sectionRefs.current && el) sectionRefs.current[key] = el;
-  };
+  }, []);
 
   return (
-    <>
+    <Box marginBottom="10rem">
       <SectionDivider
         title={toTitleCase(city)}
         size="lg"
@@ -67,6 +89,6 @@ export default function CityDetailsPage() {
       <SectionDivider title="Gallery" ref={(el) => setRef(el, "Gallery")}>
         The name of the city : {city}
       </SectionDivider>
-    </>
+    </Box>
   );
 }

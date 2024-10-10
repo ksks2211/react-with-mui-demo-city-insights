@@ -10,6 +10,7 @@ const MIN_HEIGHT = "300px" as const;
 
 export interface SectionDividerHandle {
   moveTo: () => void;
+  readTop: () => number;
 }
 interface SectionDividerProps extends BoxProps {
   title: string;
@@ -83,6 +84,14 @@ const SectionDivider = React.forwardRef<
         const absoluteTop = window.scrollY + top - extractNumber(headerHeight);
         window.scrollTo({ top: absoluteTop, behavior: "smooth" });
       }
+    },
+    readTop: () => {
+      if (moveToRef.current) {
+        // 요소의 절대 위치를 계산하여 스크롤
+        const { top } = moveToRef.current.getBoundingClientRect();
+        return top;
+      }
+      return 0;
     },
   }));
 
