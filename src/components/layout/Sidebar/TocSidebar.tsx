@@ -1,39 +1,51 @@
 import { Box, styled } from "@mui/material";
+import { toTitleCase } from "@utils/stringUtils";
 import { useTocNavigation } from "hooks";
 import { useEffect, useRef } from "react";
 
 const StyledSidebar = styled(Box)`
-  --sidebar-margin-top: 5.5rem;
+  --padding-top: 3.5rem;
   width: 100%;
 
   // stick to the top
   position: sticky;
   top: var(--header-height);
-  margin-top: var(--sidebar-margin-top);
 
-  padding: 3.5rem 1rem 0 1rem;
+  padding: var(--padding-top) 1rem 0 1rem;
   ul {
-    max-height: calc(100vh - var(--header-height) - var(--footer-height));
+    max-height: calc(
+      100vh - var(--header-height) - var(--footer-height) + var(--padding-top)
+    );
     overflow: auto;
 
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 
-    padding: 1rem 0;
+    padding: 0 0 1rem;
     li {
       cursor: pointer;
-      /* font-weight: 400; */
-      font-size: 1rem;
-      padding: 0.3rem 0 0.3rem 1rem;
+      font-size: 0.95rem;
+      padding: 0.27rem 0 0.27rem 1rem;
       color: ${({ theme }) => theme.palette.grey[700]};
 
-      &:hover {
+      transition: 0.3s;
+      &:not(:first-of-type):hover {
         font-weight: 700;
+        transform: translateX(-2px);
       }
+    }
+
+    li:first-of-type {
+      font-size: 1.2rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      padding: 10px 0;
+      background-color: ${({ theme }) => theme.palette.grey[200]};
     }
   }
 `;
 
-export default function Sidebar() {
+export default function Sidebar({ city }: { city: string }) {
   const { tocRef } = useTocNavigation();
 
   const timeoutRef = useRef<NodeJS.Timeout | number | null>(null);
@@ -53,6 +65,7 @@ export default function Sidebar() {
   }, []);
 
   const topics = [
+    city,
     "Demographics",
     "Economy",
     "Climate",
@@ -81,7 +94,7 @@ export default function Sidebar() {
       <ul>
         {topics.map((topic) => (
           <li key={topic} onClick={() => handleClick(topic)}>
-            {topic}
+            {toTitleCase(topic)}
           </li>
         ))}
       </ul>

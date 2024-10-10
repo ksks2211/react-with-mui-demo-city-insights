@@ -5,7 +5,7 @@ export default function Sidebar() {
   const { city } = useSelectedCity();
 
   if (city) {
-    return <TocSidebar />;
+    return <TocSidebar city={city}/>;
   }
 
   return <div>sidebar</div>;
