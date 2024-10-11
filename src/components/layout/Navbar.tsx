@@ -1,14 +1,20 @@
 import cn from "classnames";
 import FoldableList from "components/containers/FoldableList";
-import { useSelectedCity, useSelectedRegion } from "hooks";
+import QueryGuard from "components/guards/QueryGuard";
+import { useSelectedCityWithRegion, useSelectedRegion } from "hooks";
+import { useGetMenu } from "hooks/queries/useMenu";
 import { useEffect, useRef } from "react";
 import { CgClose } from "react-icons/cg";
-import { getMenuData } from "shared/constants";
+import { Menu } from "shared/types";
 import { StyledNavbar } from "./styled";
 import { NavbarProps } from "./types";
 
-export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
-  const navbarData = getMenuData();
+export function Navbar({
+  handleClose,
+  isNavbarOpen,
+  data,
+}: NavbarProps & { data: Menu }) {
+  // const navbarData = getMenuData();
   const navbarRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const navbarElement = navbarRef.current;
@@ -21,7 +27,7 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
   }, [isNavbarOpen]);
 
   const regionBySearchParams = useSelectedRegion();
-  const { city, region: regionByPathVariable } = useSelectedCity();
+  const { city, region: regionByPathVariable } = useSelectedCityWithRegion();
 
   const expectedRegion = regionBySearchParams || regionByPathVariable;
 
@@ -41,7 +47,7 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
       />
 
       <div className="navbar-main-area">
-        {navbarData.map((region, idx) => (
+        {data.map((region, idx) => (
           <FoldableList
             key={idx}
             data={region}
@@ -55,5 +61,20 @@ export default function Navbar({ handleClose, isNavbarOpen }: NavbarProps) {
         ))}
       </div>
     </StyledNavbar>
+  );
+}
+
+export default function NavbarWithGuard({
+  handleClose,
+  isNavbarOpen,
+}: NavbarProps) {
+  const query = useGetMenu();
+  return (
+    <QueryGuard<Menu, Error, NavbarProps>
+      query={query}
+      Component={Navbar}
+      handleClose={handleClose}
+      isNavbarOpen={isNavbarOpen}
+    />
   );
 }

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { toTitleCase } from "@utils/stringUtils";
+import LoadingBox from "components/presentational/LoadingBox";
 import { useScrollY, useSelectedCity, useTocNavigation } from "hooks";
 import { useCallback, useEffect, useRef } from "react";
 import SectionDivider, { SectionDividerHandle } from "./SectionDivider";
@@ -46,47 +47,32 @@ export default function CityDetailsPage() {
     };
   }, [city, setFocusedSection]);
 
-  if (!city) {
-    throw new Error("Invalid City");
-  }
-
-  const setRef = useCallback((el: SectionDividerHandle | null, key: string) => {
-    if (sectionRefs.current && el) sectionRefs.current[key] = el;
+  const setRef = useCallback((el: SectionDividerHandle | null) => {
+    if (sectionRefs.current && el) sectionRefs.current[el.getTitle()] = el;
   }, []);
+
+  if (!city) {
+    return <LoadingBox />;
+  }
 
   return (
     <Box marginBottom="10rem">
       <SectionDivider
         title={toTitleCase(city)}
         size="lg"
-        ref={(el) => setRef(el, city)}
+        ref={setRef}
       ></SectionDivider>
 
-      <SectionDivider
-        title="Demographics"
-        ref={(el) => setRef(el, "Demographics")}
-      ></SectionDivider>
+      <SectionDivider title="Demographics" ref={setRef}></SectionDivider>
 
-      <SectionDivider
-        title="Economy"
-        ref={(el) => setRef(el, "Economy")}
-      ></SectionDivider>
+      <SectionDivider title="Economy" ref={setRef}></SectionDivider>
 
-      <SectionDivider
-        title="Climate"
-        ref={(el) => setRef(el, "Climate")}
-      ></SectionDivider>
+      <SectionDivider title="Climate" ref={setRef}></SectionDivider>
 
-      <SectionDivider
-        title="Geography"
-        ref={(el) => setRef(el, "Geography")}
-      ></SectionDivider>
+      <SectionDivider title="Geography" ref={setRef}></SectionDivider>
 
-      <SectionDivider
-        title="History"
-        ref={(el) => setRef(el, "History")}
-      ></SectionDivider>
-      <SectionDivider title="Gallery" ref={(el) => setRef(el, "Gallery")}>
+      <SectionDivider title="History" ref={setRef}></SectionDivider>
+      <SectionDivider title="Gallery" ref={setRef}>
         The name of the city : {city}
       </SectionDivider>
     </Box>

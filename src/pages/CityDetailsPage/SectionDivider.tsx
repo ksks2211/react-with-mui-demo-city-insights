@@ -11,6 +11,7 @@ const MIN_HEIGHT = "300px" as const;
 export interface SectionDividerHandle {
   moveTo: () => void;
   readTop: () => number;
+  getTitle: () => string;
 }
 interface SectionDividerProps extends BoxProps {
   title: string;
@@ -92,6 +93,9 @@ const SectionDivider = React.forwardRef<
         return top;
       }
       return 0;
+    },
+    getTitle: () => {
+      return title;
     },
   }));
 

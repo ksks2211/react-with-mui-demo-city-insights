@@ -6,7 +6,7 @@ export function useGetDemographicsOfCity(city: City) {
   return useQuery<Demographic, Error>({
     queryKey: ["city", city],
     queryFn: () => getDemographics(city),
-    staleTime: 120000,
+    staleTime: Infinity,
     enabled: !!city,
   });
 }

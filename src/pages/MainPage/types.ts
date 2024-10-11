@@ -1,10 +1,3 @@
-import { getMenuData } from "shared/constants";
-
-export function getItems() {
-  const data = getMenuData();
-  return data.flatMap((obj) => obj.items);
-}
-
 // motion framer
 export const itemVariants = {
   hidden: { opacity: 0, y: 30 },

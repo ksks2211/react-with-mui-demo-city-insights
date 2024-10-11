@@ -1,5 +1,4 @@
 import { omit } from "lodash-es";
-import { getMenuData } from "shared/constants";
 
 export function changeObjectKey<T extends { [key: string]: unknown }>(
   arr: T[],
@@ -15,16 +14,4 @@ export function changeObjectKey<T extends { [key: string]: unknown }>(
       [originalName]
     )
   );
-}
-
-export function findRegionByCity(name: string) {
-  const data = getMenuData();
-  for (const region of data) {
-    for (const city of region.items) {
-      if (city.title === name) {
-        return region.title;
-      }
-    }
-  }
-  return null;
 }

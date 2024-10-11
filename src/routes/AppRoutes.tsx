@@ -1,12 +1,16 @@
 import RippleBox from "components/containers/RippleBox";
-import Footer from "components/layout/Footer";
+import SuspenseLoader from "components/containers/SuspenseLoader";
 import LoadingBox from "components/presentational/LoadingBox";
-import CityDetailsPage from "pages/CityDetailsPage/CityDetailsPage";
 import Demographics from "pages/Demographics";
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
-import { Header, Layout, Navbar, Sidebar } from "../components/layout";
-import { MainPage, NotFoundPage } from "../pages";
+import { NotFoundPage } from "../pages";
+
+const Layout = lazy(() => import("../components/layout/Layout.tsx"));
+const MainPage = lazy(() => import("../pages/MainPage/MainPage.tsx"));
+const CityDetailsPage = lazy(
+  () => import("../pages/CityDetailsPage/CityDetailsPage.tsx")
+);
 
 const useScrollReset = () => {
   const { pathname } = useLocation();
@@ -33,19 +37,12 @@ const AppRoutes = () => {
   return (
     <Routes>
       {/* pages with layout */}
-      <Route
-        path="/"
-        element={
-          <Layout
-            Header={Header}
-            Navbar={Navbar}
-            Footer={Footer}
-            Sidebar={Sidebar}
-          />
-        }
-      >
-        <Route index element={<MainPage />} />
-        <Route path="/:city" element={<CityDetailsPage />} />
+      <Route path="/" element={<SuspenseLoader children={<Layout />} />}>
+        <Route index element={<SuspenseLoader children={<MainPage />} />} />
+        <Route
+          path="/:city"
+          element={<SuspenseLoader children={<CityDetailsPage />} />}
+        />
 
         <Route
           path="example"

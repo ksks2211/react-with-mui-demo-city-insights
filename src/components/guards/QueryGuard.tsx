@@ -1,26 +1,23 @@
 import { UseQueryResult } from "@tanstack/react-query";
+import LoadingBox from "components/presentational/LoadingBox";
 import ErrorFallback from "pages/ErrorFallbackPage";
 
-type QueryHandlerProps1<D, E extends Error> = {
-  query: UseQueryResult<D, E>;
-  children: React.FC<{ data: D }>;
+type AnyProps = {
+  [key: string]: unknown;
 };
 
-type QueryHandlerProps2<D, E extends Error> = {
+type QueryHandlerProps<D, E extends Error, P = AnyProps> = {
   query: UseQueryResult<D, E>;
-  Component: React.FC<{ data: D }>;
-};
+  Component: React.FC<{ data: D } & P>;
+} & Omit<P, "data">;
 
-type QueryHandlerProps<D, E extends Error> =
-  | QueryHandlerProps1<D, E>
-  | QueryHandlerProps2<D, E>;
-
-export default function QueryGuard<D, E extends Error>({
+export default function QueryGuard<D, E extends Error, P = AnyProps>({
   query,
+  Component,
   ...rest
-}: QueryHandlerProps<D, E>) {
+}: QueryHandlerProps<D, E, P>) {
   const { isLoading, error, data, refetch } = query;
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingBox />;
   if (error)
     return <ErrorFallback error={error} resetErrorBoundary={refetch} />;
   if (data === undefined) {
@@ -32,9 +29,5 @@ export default function QueryGuard<D, E extends Error>({
     );
   }
 
-  if ("children" in rest) {
-    return rest.children({ data });
-  }
-
-  return <rest.Component data={data} />;
+  return <Component data={data} {...(rest as P)} />;
 }

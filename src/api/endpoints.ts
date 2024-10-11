@@ -18,6 +18,7 @@ function generateEndPoints() {
   return endpoints as ENDPOINTS_TYPE;
 }
 
-const ENDPOINTS = generateEndPoints();
+const demoEndpoints = generateEndPoints();
+const menuEndpoint = { getMenu: "/menu.json" };
 
-export { ENDPOINTS };
+export { demoEndpoints, menuEndpoint };

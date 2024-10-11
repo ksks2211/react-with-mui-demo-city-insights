@@ -1,9 +1,5 @@
 import { orange } from "@mui/material/colors";
 import { HTMLAttributes } from "react";
-import Footer from "./Footer";
-import type Header from "./Header";
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
 
 export const headerTypographyProps = {
   fontFamily: ["Fredoka"],
@@ -17,12 +13,7 @@ export interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   handleToggle: () => void;
   isLargeScreen: boolean;
 } // interfaces
-export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
-  Header: typeof Header;
-  Navbar: typeof Navbar;
-  Footer: typeof Footer;
-  Sidebar: typeof Sidebar;
-}
+
 export interface NavbarProps {
   handleClose: () => void;
   isNavbarOpen: boolean;

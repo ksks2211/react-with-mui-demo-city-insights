@@ -1,8 +1,8 @@
-import { findRegionByCity } from "@utils/arrayUtils";
+import { useGetMenu } from "hooks/queries/useMenu";
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { CITIES } from "shared/constants";
-import { City } from "shared/types";
+import { City, Menu } from "shared/types";
 
 export const useSelectedRegion = () => {
   const [searchParams] = useSearchParams();
@@ -19,14 +19,39 @@ function isValidCity(city: string | undefined): city is City {
   return city !== undefined && CITIES.includes(city);
 }
 
+export function findRegionFromCity(name: string, data?: Menu) {
+  if (!data) return null;
+
+  for (const region of data) {
+    for (const city of region.items) {
+      if (city.title === name) {
+        return region.title;
+      }
+    }
+  }
+  return null;
+}
 export const useSelectedCity = () => {
   const { city } = useParams();
+  if (!isValidCity(city)) {
+    return { city: undefined };
+  }
+  return { city };
+};
+
+export const useSelectedCityWithRegion = () => {
+  const { city } = useSelectedCity();
+  const { data } = useGetMenu();
 
   if (!isValidCity(city)) {
     return { city: undefined, region: undefined };
   }
 
-  const region = findRegionByCity(city) as string;
+  const region = findRegionFromCity(city, data);
+
+  if (!region) {
+    return { city: undefined, region: undefined };
+  }
 
   return { city, region };
 };

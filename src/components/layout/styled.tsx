@@ -3,8 +3,8 @@ import { Box, styled } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { BoxProps } from "@mui/system";
 import { rgba } from "polished";
+import { TRANSITION_DURATION } from "shared/constants";
 import { largeScreenStyle } from "shared/theme";
-import { TRANSITION_DURATION } from "./Layout";
 
 // Footer
 export const StyledFooter = styled(Box)<BoxProps>`

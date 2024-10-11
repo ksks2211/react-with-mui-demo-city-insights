@@ -3,6 +3,7 @@ import { toTitleCase } from "@utils/stringUtils";
 import cn from "classnames";
 import { useTocNavigation } from "hooks";
 import { useEffect, useRef } from "react";
+import { TargetedEvent } from "shared/types";
 const StyledSidebar = styled(Box)`
   --padding-top: 3.5rem;
   width: 100%;
@@ -70,7 +71,7 @@ export default function Sidebar({ city }: { city: string }) {
   }, []);
 
   const topics = [
-    city,
+    toTitleCase(city),
     "Demographics",
     "Economy",
     "Climate",
@@ -79,7 +80,9 @@ export default function Sidebar({ city }: { city: string }) {
     "Gallery",
   ];
 
-  const handleClick = (topic: string) => {
+  const handleClick = ({ currentTarget }: TargetedEvent) => {
+    const topic = currentTarget.dataset.topic || city;
+
     if (tocRef.current) {
       tocRef.current(topic);
     }
@@ -100,10 +103,11 @@ export default function Sidebar({ city }: { city: string }) {
         {topics.map((topic) => (
           <li
             key={topic}
-            onClick={() => handleClick(topic)}
+            data-topic={topic}
+            onClick={handleClick}
             className={cn({ focused: focusedSection === topic })}
           >
-            {toTitleCase(topic)}
+            {topic}
           </li>
         ))}
       </ul>

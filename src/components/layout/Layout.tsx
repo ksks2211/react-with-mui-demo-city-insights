@@ -1,5 +1,5 @@
 import ScrollTopBtn from "components/containers/ScrollTopBtn";
-import { useRef } from "react";
+import { lazy, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import {
@@ -10,6 +10,8 @@ import {
   useScrollY,
 } from "../../hooks";
 
+import SuspenseLoader from "components/containers/SuspenseLoader.tsx";
+import { TRANSITION_DURATION } from "shared/constants/index.ts";
 import Overlay from "./Overlay";
 import {
   FooterSlot,
@@ -19,11 +21,12 @@ import {
   RightSidebarSlot,
 } from "./slots";
 import { ContentSlot, StyledLayout, StyledLayoutWrapper } from "./styled";
-import { LayoutProps } from "./types";
-// 300 means .3s
-export const TRANSITION_DURATION = 300;
+const Header = lazy(() => import("./Header.tsx"));
+const Navbar = lazy(() => import("./Navbar.tsx"));
+const Sidebar = lazy(() => import("./Sidebar/Sidebar.tsx"));
+const Footer = lazy(() => import("./Footer.tsx"));
 
-const Layout: React.FC<LayoutProps> = ({ Header, Navbar, Footer, Sidebar }) => {
+const Layout: React.FC = () => {
   const { isDownMd: isSmallScreen, isXl: isLargeScreen } = useBreakpoints();
   const { isNavOpen, closeNav, openNav } = useNavOpen();
   const { isOverlayOpen, closeOverlay, openOverlay } = useOverlay();
@@ -66,14 +69,25 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar, Footer, Sidebar }) => {
       </CSSTransition>
       {/* Navbar */}
       <LeftNavbarSlot isNavbarOpen={isNavOpen}>
-        <Navbar handleClose={handleCloseNavbar} isNavbarOpen={isNavOpen} />
+        <SuspenseLoader
+          children={
+            <Navbar handleClose={handleCloseNavbar} isNavbarOpen={isNavOpen} />
+          }
+        />
       </LeftNavbarSlot>
 
       {/* main layout */}
       <StyledLayout data-small-screen={isSmallScreen}>
         {/* Header */}
         <HeaderSlot isSmallScreen={isSmallScreen} scrollY={scrollY}>
-          <Header handleToggle={handleToggle} isLargeScreen={isLargeScreen} />
+          <SuspenseLoader
+            children={
+              <Header
+                handleToggle={handleToggle}
+                isLargeScreen={isLargeScreen}
+              />
+            }
+          />
         </HeaderSlot>
 
         <ContentSlot>
@@ -85,14 +99,14 @@ const Layout: React.FC<LayoutProps> = ({ Header, Navbar, Footer, Sidebar }) => {
           {/* Right Sidebar  */}
           {!isSmallScreen && (
             <RightSidebarSlot>
-              <Sidebar />
+              <SuspenseLoader children={<Sidebar />} />
             </RightSidebarSlot>
           )}
         </ContentSlot>
 
         {/* Footer */}
         <FooterSlot>
-          <Footer />
+          <SuspenseLoader children={<Footer />} />
         </FooterSlot>
       </StyledLayout>
 

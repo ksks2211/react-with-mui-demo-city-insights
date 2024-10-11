@@ -2,29 +2,27 @@ import { Container, Grid2 } from "@mui/material";
 import { toTitleCase } from "@utils/stringUtils";
 import cn from "classnames";
 import ContainedImage from "components/containers/ContainedImage";
+import QueryGuard from "components/guards/QueryGuard";
 import { motion } from "framer-motion";
 import { useSelectedRegion } from "hooks";
+import { useGetMenu } from "hooks/queries/useMenu";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TargetedEvent } from "shared/types";
+import { Menu, TargetedEvent } from "shared/types";
 import { CustomGrid2, PhotoBox, StyledHeader } from "./styled";
-import {
-  containerVariants,
-  customGrid2Props,
-  getItems,
-  itemVariants,
-} from "./types";
-function validateItem(itemContinent: string, continent: string): boolean {
-  return itemContinent === continent || continent === "all";
+import { containerVariants, customGrid2Props, itemVariants } from "./types";
+
+function validateItem(itemRegion: string, region: string): boolean {
+  return itemRegion === region || region === "all";
 }
 
 const DURATION = 500;
 
 const photoBoxStyles = { transition: `${DURATION / 1000}s` };
 
-export default function MainPage() {
-  const continent = useSelectedRegion() || "all";
-  const items = getItems();
+export function MainPage({ data }: { data: Menu }) {
+  const region = useSelectedRegion() || "all";
+  const items = data.flatMap((obj) => obj.items);
   const navigate = useNavigate();
 
   const [isNavigating, setIsNavigating] = useState(false);
@@ -58,14 +56,12 @@ export default function MainPage() {
   };
 
   const filteredItems = items.filter((item) =>
-    validateItem(item.continent, continent)
+    validateItem(item.continent, region)
   );
 
   return (
     <Container maxWidth="md" sx={{ paddingBottom: "7rem" }}>
-      <StyledHeader component="h2">
-        Region : {toTitleCase(continent)}
-      </StyledHeader>
+      <StyledHeader component="h2">Region : {toTitleCase(region)}</StyledHeader>
 
       <motion.ul
         initial="hidden"
@@ -104,4 +100,9 @@ export default function MainPage() {
       </motion.ul>
     </Container>
   );
+}
+
+export default function MainPageWithGuard() {
+  const query = useGetMenu();
+  return <QueryGuard query={query} Component={MainPage} />;
 }
