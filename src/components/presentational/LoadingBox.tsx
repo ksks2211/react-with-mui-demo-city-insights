@@ -15,7 +15,7 @@ interface LoadingBoxProps {
 
 const LoadingBox = ({ height, size }: LoadingBoxProps) => (
   <Box sx={{ ...loaderStyles, height }}>
-    <CircularProgress size={size || "2.2rem"} />
+    <CircularProgress size={size || "2rem"} />
   </Box>
 );
 
