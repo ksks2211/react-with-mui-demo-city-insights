@@ -27,7 +27,7 @@ const StyledSection = styled(Box)`
   padding: 0 1.3rem;
 
   // tmp
-  height: 400px;
+  min-height: 300px;
 
   .section-title {
     padding: 1.8rem 0.4rem 1rem;
@@ -44,9 +44,9 @@ const StyledSection = styled(Box)`
   .section-content {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     border-radius: 12px;
-
-    background-color: var(--section-background);
+    background-color: var(--section-bg);
   }
 `;
 

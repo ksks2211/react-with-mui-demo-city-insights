@@ -1,36 +1,10 @@
 import { Box, Skeleton, styled } from "@mui/material";
-import { rgba } from "polished";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { StyledImageWrapper } from "./ContainedImage";
 
-export const StyledImageWrapper = styled(Box)`
+const StyledContainedIframe = styled("iframe")`
   position: relative;
-  width: 100%;
-  height: 100%;
-
-  .img-alt {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: ${({ theme }) => theme.palette.grey[700]};
-  }
-
-  .img-loading {
-    background-color: ${({ theme }) => rgba(theme.palette.primary.light, 0.5)};
-  }
-
-  .img-error {
-    background-color: ${({ theme }) => rgba(theme.palette.warning.light, 0.5)};
-  }
-`;
-
-const StyledContainedImage = styled("img")`
-  position: relative;
-  object-fit: cover;
   z-index: 1;
 `;
 
@@ -39,22 +13,22 @@ const useInViewOptions = {
   threshold: 0.4,
 };
 
-export default function ContainedImage({
+export default function ContainedIframe({
   src,
   ...rest
-}: React.ImgHTMLAttributes<HTMLImageElement>) {
+}: React.IframeHTMLAttributes<HTMLIFrameElement>) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const { ref, inView } = useInView(useInViewOptions);
 
-  const handleImageLoad = () => {
+  const handleIframeLoad = () => {
     setIsSuccess(true);
     setIsLoading(false);
   };
 
-  const handleImageError = () => {
+  const handleIframeError = () => {
     setIsError(true);
     setIsLoading(false);
     setIsSuccess(false);
@@ -75,13 +49,13 @@ export default function ContainedImage({
   return (
     <StyledImageWrapper ref={ref}>
       {(isLoading || isSuccess) && (
-        <StyledContainedImage
+        <StyledContainedIframe
           src={src}
           width="100%"
           height="100%"
           loading="lazy"
-          onLoad={handleImageLoad}
-          onError={handleImageError}
+          onLoad={handleIframeLoad}
+          onError={handleIframeError}
           {...rest}
         />
       )}

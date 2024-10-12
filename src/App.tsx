@@ -5,7 +5,7 @@ import { ModalProvider } from "contexts/ModalContext";
 import { TocNavigationProvider } from "contexts/TocNavigationContext";
 import { lazy, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { useListenScrollY, useMode } from "./hooks";
 import ErrorFallbackPage from "./pages/ErrorFallbackPage";
@@ -25,7 +25,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary FallbackComponent={ErrorFallbackPage}>
-        <HashRouter>
+        <BrowserRouter>
           <ModalProvider>
             <TocNavigationProvider>
               <ThemeProvider theme={theme}>
@@ -36,7 +36,7 @@ function App() {
               </ThemeProvider>
             </TocNavigationProvider>
           </ModalProvider>
-        </HashRouter>
+        </BrowserRouter>
       </ErrorBoundary>
     </QueryClientProvider>
   );

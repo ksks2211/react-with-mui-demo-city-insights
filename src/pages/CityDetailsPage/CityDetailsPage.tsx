@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
 import { toTitleCase } from "@utils/stringUtils";
+import GiscusComments from "components/containers/GiscusComments";
 import LoadingBox from "components/presentational/LoadingBox";
 import { useScrollY, useSelectedCity, useTocNavigation } from "hooks";
 import { useCallback, useEffect, useRef } from "react";
+import Intro from "./IntroSection";
 import SectionDivider, { SectionDividerHandle } from "./SectionDivider";
 
 export default function CityDetailsPage() {
@@ -57,11 +59,9 @@ export default function CityDetailsPage() {
 
   return (
     <Box marginBottom="10rem">
-      <SectionDivider
-        title={toTitleCase(city)}
-        size="lg"
-        ref={setRef}
-      ></SectionDivider>
+      <SectionDivider title={toTitleCase(city)} size="lg" ref={setRef}>
+        <Intro city={city} />
+      </SectionDivider>
 
       <SectionDivider title="Demographics" ref={setRef}></SectionDivider>
 
@@ -75,6 +75,8 @@ export default function CityDetailsPage() {
       <SectionDivider title="Gallery" ref={setRef}>
         The name of the city : {city}
       </SectionDivider>
+
+      <GiscusComments city={city} />
     </Box>
   );
 }
