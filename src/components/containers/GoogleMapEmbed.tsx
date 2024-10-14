@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import type { BoxProps } from "@mui/system";
 import React from "react";
+import { Coordinates } from "shared/types";
 import ContainedIframe from "./ContainedIframe";
 
 const mapStyles = {
@@ -10,10 +11,10 @@ const mapStyles = {
   margin: "auto",
 };
 
-function GoogleMapEmbed(props: BoxProps) {
-  const lat = 40.776676;
-  const lon = -73.971321;
-  const zoom = 10;
+const zoom = 10 as const;
+
+function GoogleMapEmbed(props: BoxProps & { coord: Coordinates }) {
+  const { lat, lon } = props.coord;
 
   return (
     <Box sx={mapStyles} {...props}>

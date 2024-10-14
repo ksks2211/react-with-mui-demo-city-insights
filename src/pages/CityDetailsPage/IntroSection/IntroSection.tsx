@@ -1,6 +1,9 @@
 import { Box, styled } from "@mui/material";
 import GoogleMapEmbed from "components/containers/GoogleMapEmbed";
+import QueryGuard from "components/guards/QueryGuard";
+import { useGetIntroOfCity } from "hooks/queries/useCity";
 import React from "react";
+import { IntroData } from "shared/types";
 
 interface IntroProps {
   city: string;
@@ -36,14 +39,13 @@ const StyledDescription = styled(Box)`
   overflow-wrap: normal;
 `;
 
-const description =
-  "New York, often called New York City or NYC, is the most populous city in the United States, located at the southern tip of New York State on one of the world's largest natural harbors. The city comprises five boroughs, each coextensive with a respective county. New York is a global center of finance and commerce, culture, technology, entertainment and media, academics and scientific output, the arts and fashion, and, as home to the headquarters of the United Nations, international diplomacy.";
+function Intro({ city, data }: IntroProps & { data: IntroData }) {
+  const { description, coord } = data;
 
-function Intro({ city }: IntroProps) {
   return (
     <Box sx={introStyles}>
       <Box sx={mapStyles}>
-        <GoogleMapEmbed />
+        <GoogleMapEmbed coord={coord} />
       </Box>
       <StyledDescription
         className="description"
@@ -56,4 +58,9 @@ function Intro({ city }: IntroProps) {
   );
 }
 
-export default React.memo(Intro);
+function IntroWithGuard({ city }: IntroProps) {
+  const query = useGetIntroOfCity(city);
+  return <QueryGuard query={query} Component={Intro} city={city} />;
+}
+
+export default React.memo(IntroWithGuard);

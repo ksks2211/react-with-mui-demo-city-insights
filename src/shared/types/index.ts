@@ -21,3 +21,13 @@ export type MainMenuItem = {
 };
 
 export type Menu = MainMenuItem[];
+
+export type Coordinates = {
+  lon: number;
+  lat: number;
+};
+
+export type IntroData = {
+  description: string;
+  coord: Coordinates;
+};

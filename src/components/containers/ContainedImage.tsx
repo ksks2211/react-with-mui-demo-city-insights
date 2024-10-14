@@ -20,7 +20,6 @@ export const StyledImageWrapper = styled(Box)`
   }
 
   .img-loading {
-    background-color: ${({ theme }) => rgba(theme.palette.primary.light, 0.5)};
   }
 
   .img-error {

@@ -1,24 +1,23 @@
 import { CITIES } from "shared/constants";
 import type { City } from "../shared/types";
 
-type ENDPOINTS_TYPE_BEFORE = {
-  [key in City]?: { getCityDemographics: string };
-};
-
-type ENDPOINTS_TYPE = { [key in City]: { getCityDemographics: string } };
+type Endpoints = Record<
+  City,
+  { getCityDemographics: string; getCityIntro: string }
+>;
 
 function generateEndPoints() {
-  const endpoints: ENDPOINTS_TYPE_BEFORE = {};
+  const endpoints: Endpoints = {};
   for (const city of CITIES) {
     endpoints[city] = {
       getCityDemographics: `/${city}/demographics.json`,
+      getCityIntro: `/${city}/intro.json`,
     };
   }
-
-  return endpoints as ENDPOINTS_TYPE;
+  return endpoints;
 }
 
-const demoEndpoints = generateEndPoints();
+const cityEndpoints = generateEndPoints();
 const menuEndpoint = { getMenu: "/menu.json" };
 
-export { demoEndpoints, menuEndpoint };
+export { cityEndpoints, menuEndpoint };
