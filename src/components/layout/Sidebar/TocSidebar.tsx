@@ -3,7 +3,7 @@ import { toTitleCase } from "@utils/stringUtils";
 import cn from "classnames";
 import { useTocNavigation } from "hooks";
 import { useEffect, useRef } from "react";
-import { TargetedEvent } from "shared/types";
+import type { City, TargetedEvent } from "shared/types";
 const StyledSidebar = styled(Box)`
   --padding-top: 3.5rem;
   width: 100%;
@@ -51,15 +51,15 @@ const StyledSidebar = styled(Box)`
   }
 `;
 
-export default function Sidebar({ city }: { city: string }) {
+export default function Sidebar({ city }: { city: City }) {
   const { tocRef, focusedSection } = useTocNavigation();
 
-  const timeoutRef = useRef<NodeJS.Timeout | number | null>(null);
+  const timeoutIdRef = useRef<NodeJS.Timeout | number | null>(null);
 
   const clearTimeoutIfExists = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+      timeoutIdRef.current = null;
     }
   };
 
@@ -68,7 +68,7 @@ export default function Sidebar({ city }: { city: string }) {
     return () => {
       clearTimeoutIfExists();
     };
-  }, []);
+  }, [city]);
 
   const topics = [
     toTitleCase(city),
@@ -92,7 +92,7 @@ export default function Sidebar({ city }: { city: string }) {
     }, 450);
 
     clearTimeoutIfExists();
-    timeoutRef.current = setTimeout(() => {
+    timeoutIdRef.current = setTimeout(() => {
       if (tocRef.current) tocRef.current(topic);
     }, 900);
   };

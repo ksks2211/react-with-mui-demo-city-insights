@@ -11,7 +11,7 @@ const CITIES = [
   "tokyo",
   "los-angeles",
   "sao-paulo",
-];
+] as const;
 
 export { CITIES };
 

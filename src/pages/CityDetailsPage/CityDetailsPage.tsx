@@ -43,7 +43,8 @@ export default function CityDetailsPage() {
   }, [scrollY, setFocusedSection]);
 
   useEffect(() => {
-    setFocusedSection(city || null);
+    setFocusedSection(city ? toTitleCase(city) : null);
+
     return () => {
       setFocusedSection(null);
     };

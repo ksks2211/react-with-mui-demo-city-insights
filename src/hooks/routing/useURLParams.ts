@@ -16,7 +16,7 @@ export const useSelectedRegion = () => {
 };
 
 function isValidCity(city: string | undefined): city is City {
-  return city !== undefined && CITIES.includes(city);
+  return city !== undefined && CITIES.includes(city as City);
 }
 
 export function findRegionFromCity(name: string, data?: Menu) {
@@ -33,10 +33,11 @@ export function findRegionFromCity(name: string, data?: Menu) {
 }
 export const useSelectedCity = () => {
   const { city } = useParams();
-  if (!isValidCity(city)) {
-    return { city: undefined };
+  if (isValidCity(city)) {
+    return { city };
   }
-  return { city };
+
+  return { city: undefined };
 };
 
 export const useSelectedCityWithRegion = () => {
