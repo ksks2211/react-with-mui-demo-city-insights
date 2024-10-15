@@ -7,14 +7,14 @@ type Endpoints = Record<
 >;
 
 function generateEndPoints() {
-  const endpoints: Endpoints = {};
+  const endpoints: Partial<Endpoints> = {};
   for (const city of CITIES) {
     endpoints[city] = {
       getCityDemographics: `/${city}/demographics.json`,
       getCityIntro: `/${city}/intro.json`,
     };
   }
-  return endpoints;
+  return endpoints as Endpoints;
 }
 
 const cityEndpoints = generateEndPoints();

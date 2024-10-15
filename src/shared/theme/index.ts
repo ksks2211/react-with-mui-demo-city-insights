@@ -84,6 +84,17 @@ const commonStyles = css`
       opacity: 0;
     }
   }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
 `;
 
 // Mode specific styles

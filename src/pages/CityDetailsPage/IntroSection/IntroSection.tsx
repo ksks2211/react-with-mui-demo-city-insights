@@ -44,7 +44,7 @@ function Intro({ city, data }: IntroProps & { data: IntroData }) {
   return (
     <Box sx={introStyles}>
       <Box sx={mapStyles}>
-        <GoogleMapEmbed coord={coord} />
+        <GoogleMapEmbed coord={coord} city={city} />
       </Box>
       <StyledDescription
         className="description"
