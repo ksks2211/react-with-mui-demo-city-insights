@@ -2,11 +2,10 @@ import { Box, styled } from "@mui/material";
 import GoogleMapEmbed from "components/containers/GoogleMapEmbed";
 import QueryGuard from "components/guards/QueryGuard";
 import { useGetIntroOfCity } from "hooks/queries/useCity";
-import React from "react";
-import { IntroData } from "shared/types";
+import { City, IntroData } from "shared/types";
 
 interface IntroProps {
-  city: string;
+  city: City;
 }
 
 const introStyles = {
@@ -63,4 +62,4 @@ function IntroWithGuard({ city }: IntroProps) {
   return <QueryGuard query={query} Component={Intro} city={city} />;
 }
 
-export default React.memo(IntroWithGuard);
+export default IntroWithGuard;

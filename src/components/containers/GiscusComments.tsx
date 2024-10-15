@@ -1,5 +1,14 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+
+const boxStyle = {
+  marginTop: "3.9rem",
+  padding: "0 1.5rem",
+  width: "100%",
+};
+
+const giscusRepoId = import.meta.env.VITE_GISCUS_REPO_ID;
+const giscusCategoryId = import.meta.env.VITE_GISCUS_CATEGORY_ID;
 
 function GiscusComments({ city }: { city: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -10,9 +19,9 @@ function GiscusComments({ city }: { city: string }) {
     const config = {
       src: "https://giscus.app/client.js",
       "data-repo": "ksks2211/utterances",
-      "data-repo-id": "R_kgDOKUYlIw",
+      "data-repo-id": giscusRepoId,
       "data-category": "Announcements",
-      "data-category-id": "DIC_kwDOKUYlI84CjR0X",
+      "data-category-id": giscusCategoryId,
       "data-mapping": "pathname",
       "data-strict": "0",
       "data-reactions-enabled": "1",
@@ -43,16 +52,7 @@ function GiscusComments({ city }: { city: string }) {
     };
   }, [city]);
 
-  return (
-    <Box
-      ref={ref}
-      sx={{
-        marginTop: "3.9rem",
-        padding: "0 1.5rem",
-        width: "100%",
-      }}
-    />
-  );
+  return <Box ref={ref} sx={boxStyle} />;
 }
 
-export default React.memo(GiscusComments);
+export default GiscusComments;

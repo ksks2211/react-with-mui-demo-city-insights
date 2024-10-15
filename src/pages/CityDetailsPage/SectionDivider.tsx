@@ -1,56 +1,14 @@
-import { Box, styled } from "@mui/material";
-import { BoxProps } from "@mui/system";
 import { extractNumber } from "@utils/numberUtils";
 import LazyMountEnhancer from "components/enhancers/LazyMountEnhancer";
 import { useCssVariableColor } from "hooks";
 import { darken } from "polished";
 import React, { useImperativeHandle, useRef } from "react";
+import { StyledSection } from "./styled";
+import { SectionDividerHandle, SectionDividerProps } from "./types";
 
 const MIN_HEIGHT = "300px" as const;
 
-export interface SectionDividerHandle {
-  moveTo: () => void;
-  readTop: () => number;
-  getTitle: () => string;
-}
-interface SectionDividerProps extends BoxProps {
-  title: string;
-  size?: "lg" | "md";
-}
-
-const StyledSection = styled(Box)`
-  --section-background: #f6f7fb;
-
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0 1.3rem;
-
-  // tmp
-  min-height: 300px;
-
-  .section-title {
-    padding: 1.8rem 0.4rem 1rem;
-    span {
-      display: block;
-      height: 110%;
-
-      font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-      border-bottom-color: ${({ theme }) => theme.palette.grey[400]};
-      border-bottom-style: solid;
-    }
-  }
-
-  .section-content {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    border-radius: 12px;
-    background-color: var(--section-bg);
-  }
-`;
-
-const getStyles = (size: string, accentColor: string) => {
+const getSectionStyles = (size: string, accentColor: string) => {
   const isLarge = size === "lg";
 
   return {
@@ -75,7 +33,7 @@ const SectionDivider = React.forwardRef<
   const accentColor = useCssVariableColor("--accent-color");
   const headerHeight = useCssVariableColor("--header-height");
 
-  const sx = getStyles(size, accentColor);
+  const sx = getSectionStyles(size, accentColor);
 
   useImperativeHandle(ref, () => ({
     moveTo: () => {

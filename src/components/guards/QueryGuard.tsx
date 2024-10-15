@@ -2,20 +2,21 @@ import { UseQueryResult } from "@tanstack/react-query";
 import LoadingBox from "components/presentational/LoadingBox";
 import ErrorFallback from "pages/ErrorFallbackPage";
 
-type AnyProps = {
+type AnyButDataProps = {
   [key: string]: unknown;
+  data: never;
 };
 
-type QueryHandlerProps<D, E extends Error, P = AnyProps> = {
+type QueryHandlerProps<D, E, P> = {
   query: UseQueryResult<D, E>;
   Component: React.FC<{ data: D } & P>;
 } & Omit<P, "data">;
 
-export default function QueryGuard<D, E extends Error, P = AnyProps>({
-  query,
-  Component,
-  ...rest
-}: QueryHandlerProps<D, E, P>) {
+export default function QueryGuard<
+  D, // type of query result
+  E extends Error = Error,
+  P = AnyButDataProps // type of props other than data
+>({ query, Component, ...rest }: QueryHandlerProps<D, E, P>) {
   const { isLoading, error, data, refetch } = query;
   if (isLoading) return <LoadingBox />;
   if (error)

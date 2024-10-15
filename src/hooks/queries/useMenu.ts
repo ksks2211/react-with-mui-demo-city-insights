@@ -20,5 +20,6 @@ export function useGetMenu() {
     queryFn: getMenu,
     select: sortMenuData,
     staleTime: Infinity,
+    gcTime: Infinity,
   });
 }

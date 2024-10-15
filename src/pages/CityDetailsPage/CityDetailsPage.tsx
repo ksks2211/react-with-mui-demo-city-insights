@@ -5,7 +5,8 @@ import LoadingBox from "components/presentational/LoadingBox";
 import { useScrollY, useSelectedCity, useTocNavigation } from "hooks";
 import { useCallback, useEffect, useRef } from "react";
 import Intro from "./IntroSection";
-import SectionDivider, { SectionDividerHandle } from "./SectionDivider";
+import SectionDivider from "./SectionDivider";
+import { SectionDividerHandle } from "./types";
 
 export default function CityDetailsPage() {
   const { city } = useSelectedCity();

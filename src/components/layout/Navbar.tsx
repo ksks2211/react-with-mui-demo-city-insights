@@ -70,7 +70,7 @@ export default function NavbarWithGuard({
 }: NavbarProps) {
   const query = useGetMenu();
   return (
-    <QueryGuard<Menu, Error, NavbarProps>
+    <QueryGuard
       query={query}
       Component={Navbar}
       handleClose={handleClose}
