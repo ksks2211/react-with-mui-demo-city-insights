@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMenu } from "api/services";
 import { sortBy } from "lodash-es";
-import { Menu } from "shared/types";
+import type { Menu } from "shared/types";
 
 function sortMenuData(data: Menu) {
   const sortedData = sortBy(data, "title").map((obj) => {

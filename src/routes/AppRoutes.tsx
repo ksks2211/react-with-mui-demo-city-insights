@@ -1,8 +1,6 @@
 import SuspenseLoader from "components/containers/SuspenseLoader";
-import LoadingBox from "components/presentational/LoadingBox";
-import Demographics from "pages/Demographics";
 import { lazy, useEffect } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 const Layout = lazy(() => import("../components/layout/Layout.tsx"));
 const MainPage = lazy(() => import("../pages/MainPage/MainPage.tsx"));
@@ -44,7 +42,7 @@ const AppRoutes = () => {
           element={<SuspenseLoader children={<CityDetailsPage />} />}
         />
 
-        <Route
+        {/* <Route
           path="example"
           element={
             <div>
@@ -53,7 +51,7 @@ const AppRoutes = () => {
             </div>
           }
         />
-        <Route path="demographics" element={<Demographics />} />
+        <Route path="demographics" element={<Demographics />} /> */}
       </Route>
 
       <Route

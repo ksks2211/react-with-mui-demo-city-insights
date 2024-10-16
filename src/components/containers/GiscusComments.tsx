@@ -10,29 +10,30 @@ const boxStyle = {
 const giscusRepoId = import.meta.env.VITE_GISCUS_REPO_ID;
 const giscusCategoryId = import.meta.env.VITE_GISCUS_CATEGORY_ID;
 
+const config = {
+  src: "https://giscus.app/client.js",
+  "data-repo": "ksks2211/utterances",
+  "data-repo-id": giscusRepoId,
+  "data-category": "Announcements",
+  "data-category-id": giscusCategoryId,
+  "data-mapping": "pathname",
+  "data-strict": "0",
+  "data-reactions-enabled": "1",
+  "data-emit-metadata": "0",
+  "data-input-position": "top",
+  "data-theme": "light",
+  "data-lang": "en",
+  "data-loading": "lazy",
+  crossOrigin: "anonymous",
+  async: true,
+};
+
 function GiscusComments({ city }: { city: string }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const script = document.createElement("script");
 
-    const config = {
-      src: "https://giscus.app/client.js",
-      "data-repo": "ksks2211/utterances",
-      "data-repo-id": giscusRepoId,
-      "data-category": "Announcements",
-      "data-category-id": giscusCategoryId,
-      "data-mapping": "pathname",
-      "data-strict": "0",
-      "data-reactions-enabled": "1",
-      "data-emit-metadata": "0",
-      "data-input-position": "top",
-      "data-theme": "light",
-      "data-lang": "en",
-      "data-loading": "lazy",
-      crossOrigin: "anonymous",
-      async: true,
-    };
     Object.entries(config).forEach(([key, value]) => {
       script.setAttribute(key, value as string);
     });

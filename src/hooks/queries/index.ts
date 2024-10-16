@@ -1,1 +1,2 @@
-export { useGetDemographicsOfCity } from "hooks/queries/useCity";
+export { useGetDemographicsOfCity } from "./useCity";
+export { useGetMenu } from "./useMenu";

@@ -1,15 +1,18 @@
 import { Box } from "@mui/material";
 import { toTitleCase } from "@utils/stringUtils";
 import GiscusComments from "components/containers/GiscusComments";
+import SuspenseLoader from "components/containers/SuspenseLoader.tsx";
 import LoadingBox from "components/presentational/LoadingBox";
+
 import { useScrollY, useSelectedCity, useTocNavigation } from "hooks";
-import { useCallback, useEffect, useRef } from "react";
-import Intro from "./IntroSection";
+import React, { lazy, useCallback, useEffect, useRef } from "react";
+import type { City } from "shared/types";
 import SectionDivider from "./SectionDivider";
 import { SectionDividerHandle } from "./types";
 
-export default function CityDetailsPage() {
-  const { city } = useSelectedCity();
+const Intro = lazy(() => import("./IntroSection/IntroSection.tsx"));
+
+function CityDetailsPage({ city }: { city: City }) {
   const sectionRefs = useRef<{ [key: string]: SectionDividerHandle }>({});
   const { tocRef, setFocusedSection } = useTocNavigation();
   const { scrollY } = useScrollY();
@@ -62,7 +65,7 @@ export default function CityDetailsPage() {
   return (
     <Box marginBottom="10rem">
       <SectionDivider title={toTitleCase(city)} size="lg" ref={setRef}>
-        <Intro city={city} />
+        <SuspenseLoader children={<Intro city={city} />} />
       </SectionDivider>
 
       <SectionDivider title="Demographics" ref={setRef}></SectionDivider>
@@ -81,4 +84,16 @@ export default function CityDetailsPage() {
       <GiscusComments city={city} />
     </Box>
   );
+}
+
+const CityDetailsPageWithMemo = React.memo(CityDetailsPage);
+
+export default function CityDetailsPageWithGuard() {
+  const { city } = useSelectedCity();
+
+  if (!city) {
+    return <LoadingBox />;
+  }
+
+  return <CityDetailsPageWithMemo city={city} />;
 }

@@ -1,10 +1,10 @@
 import { Box, styled } from "@mui/material";
+import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
+import React, { useRef } from "react";
+
 import type { BoxProps } from "@mui/system";
 import type { Libraries } from "@react-google-maps/api";
-import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
-
-import React, { useRef } from "react";
-import { City, Coordinates } from "shared/types";
+import type { City, Coordinates } from "shared/types";
 
 const mapStyles = {
   width: { xs: "100%", sm: "90%", lg: "100%" },
@@ -55,9 +55,8 @@ const googleMapOptions = {
 
 const libraries: Libraries = ["marker"];
 
-function GoogleMapEmbed({
+function GoogleMapBox({
   coord,
-
   ...rest
 }: BoxProps & { coord: Coordinates; city: City }) {
   const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(
@@ -67,6 +66,7 @@ function GoogleMapEmbed({
   const onUnmount = () => {
     if (markerRef.current) {
       markerRef.current.map = null; // Detaches the marker from the map
+      markerRef.current.remove();
       markerRef.current = null;
     }
   };
@@ -108,6 +108,6 @@ function GoogleMapEmbed({
 }
 
 export default React.memo(
-  GoogleMapEmbed,
+  GoogleMapBox,
   (prevProps, nextProps) => prevProps.city === nextProps.city
 );

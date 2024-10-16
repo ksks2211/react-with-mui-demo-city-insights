@@ -15,5 +15,5 @@ const CITIES = [
 
 export { CITIES };
 
-export type Continent = Menu[number]; // 300 means .3s
+export type Region = Menu[number]; // 300 means .3s
 export const TRANSITION_DURATION = 300;

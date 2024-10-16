@@ -1,31 +1,9 @@
 import { Box, styled } from "@mui/material";
-import GoogleMapEmbed from "components/containers/GoogleMapEmbed";
+import GoogleMapBox from "components/containers/GoogleMapBox";
 import QueryGuard from "components/guards/QueryGuard";
 import { useGetIntroOfCity } from "hooks/queries/useCity";
-import { City, IntroData } from "shared/types";
-
-interface IntroProps {
-  city: City;
-}
-
-const introStyles = {
-  display: "flex",
-  flexDirection: { xs: "column", lg: "row-reverse" },
-};
-
-const mapStyles = {
-  width: { xs: "100%", lg: "50%" },
-  padding: "1rem",
-
-  display: "flex",
-  alignItems: "center",
-};
-
-const textStyles = {
-  width: { xs: "100%", lg: "50%" },
-
-  padding: "1rem",
-};
+import { IntroData } from "shared/types";
+import { IntroProps, introStyles, mapStyles, textStyles } from "./types";
 
 const StyledDescription = styled(Box)`
   &::first-letter {
@@ -44,7 +22,7 @@ function Intro({ city, data }: IntroProps & { data: IntroData }) {
   return (
     <Box sx={introStyles}>
       <Box sx={mapStyles}>
-        <GoogleMapEmbed coord={coord} city={city} />
+        <GoogleMapBox coord={coord} city={city} />
       </Box>
       <StyledDescription
         className="description"

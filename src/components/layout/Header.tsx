@@ -1,8 +1,9 @@
 import { Typography } from "@mui/material";
 import { LuMenu } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import { headerTypographyProps } from "./constants.ts";
 import { StyledHeader, StyledMenuButton } from "./styled";
-import { HeaderProps, headerTypographyProps } from "./types";
+import type { HeaderProps } from "./types";
 
 const HEADER_TITLE = "City Insights" as const;
 

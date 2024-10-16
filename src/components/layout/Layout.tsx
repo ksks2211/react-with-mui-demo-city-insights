@@ -11,7 +11,7 @@ import {
 } from "../../hooks";
 
 import SuspenseLoader from "components/containers/SuspenseLoader.tsx";
-import { TRANSITION_DURATION } from "shared/constants/index.ts";
+import { TRANSITION_DURATION } from "shared/constants";
 import Overlay from "./Overlay";
 import {
   FooterSlot,

@@ -4,22 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { Continent } from "shared/constants";
-import { TargetedEvent } from "shared/types";
+import { Region } from "shared/constants";
+import type { TargetedEvent } from "shared/types";
+import { motionUlProps } from "./constants";
 import { StyledFoldableList } from "./styled";
-
-const motionUlProps = {
-  initial: {
-    height: 0,
-    opacity: 0,
-  },
-  animate: {
-    height: "auto",
-    opacity: 1,
-  },
-  exit: { height: 0, opacity: 0 },
-  transition: { duration: 0.3, ease: "easeInOut" },
-};
 
 const FoldableList = ({
   data,
@@ -28,7 +16,7 @@ const FoldableList = ({
   selectedCategory,
   selectedSubCategory,
 }: {
-  data: Continent;
+  data: Region;
   handleNavClose: () => void;
   initialIsOpen: boolean;
   selectedCategory?: string;

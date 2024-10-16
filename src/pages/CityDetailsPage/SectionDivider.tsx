@@ -1,28 +1,10 @@
 import { extractNumber } from "@utils/numberUtils";
 import LazyMountEnhancer from "components/enhancers/LazyMountEnhancer";
 import { useCssVariableColor } from "hooks";
-import { darken } from "polished";
 import React, { useImperativeHandle, useRef } from "react";
+import { getSectionStyles, MIN_HEIGHT } from "./constants";
 import { StyledSection } from "./styled";
-import { SectionDividerHandle, SectionDividerProps } from "./types";
-
-const MIN_HEIGHT = "300px" as const;
-
-const getSectionStyles = (size: string, accentColor: string) => {
-  const isLarge = size === "lg";
-
-  return {
-    ".section-title": {
-      fontSize: isLarge ? "1.65rem" : "1.25rem",
-      fontWeight: isLarge ? 900 : 500,
-      color: isLarge ? darken(0.05, accentColor) : undefined,
-      span: {
-        borderBottomWidth: isLarge ? 0 : "1px",
-        fontFamily: isLarge ? "Roboto" : undefined,
-      },
-    },
-  };
-};
+import type { SectionDividerHandle, SectionDividerProps } from "./types";
 
 const SectionDivider = React.forwardRef<
   SectionDividerHandle,
