@@ -22,7 +22,7 @@ export default function LazyMountEnhancer({
 }: LazyMountWrapperProps) {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: threshold || 0.3,
+    threshold: threshold || 0.35,
   });
 
   const sx = getSx(inView, width, height);

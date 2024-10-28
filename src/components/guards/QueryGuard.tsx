@@ -1,6 +1,6 @@
 import { UseQueryResult } from "@tanstack/react-query";
 import LoadingBox from "components/presentational/LoadingBox";
-import ErrorFallback from "pages/ErrorFallbackPage";
+import WarningBox from "components/presentational/WarningBox";
 
 type AnyButDataProps = {
   [key: string]: unknown;
@@ -19,13 +19,17 @@ export default function QueryGuard<
 >({ query, Component, ...rest }: QueryHandlerProps<D, E, P>) {
   const { isLoading, error, data, refetch } = query;
   if (isLoading) return <LoadingBox />;
+
   if (error)
-    return <ErrorFallback error={error} resetErrorBoundary={refetch} />;
+    return (
+      <WarningBox message="API Query Failed!" error={error} reset={refetch} />
+    );
   if (data === undefined) {
     return (
-      <ErrorFallback
+      <WarningBox
+        message="API Query Failed!"
         error={new Error("Not Found")}
-        resetErrorBoundary={refetch}
+        reset={refetch}
       />
     );
   }

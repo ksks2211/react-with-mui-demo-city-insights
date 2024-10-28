@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getDemographics, getIntro } from "api/services";
-import type { City, Demographic, IntroData } from "shared/types";
+import type { City, DemographicsData, IntroData } from "shared/types";
 
 export function useGetDemographicsOfCity(city: City) {
-  return useQuery<Demographic, Error>({
+  return useQuery<DemographicsData, Error>({
     queryKey: ["demo", city],
     queryFn: () => getDemographics(city),
     staleTime: Infinity,

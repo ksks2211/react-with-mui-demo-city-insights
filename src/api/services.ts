@@ -1,4 +1,4 @@
-import type { City, Demographic, IntroData, Menu } from "shared/types";
+import type { City, DemographicsData, IntroData, Menu } from "shared/types";
 import apiClient from "./client";
 import { cityEndpoints, menuEndpoint } from "./endpoints";
 
@@ -18,7 +18,7 @@ async function getData<T>(endpoint: string) {
 
 export async function getDemographics(city: City) {
   const endpoint = cityEndpoints[city].getCityDemographics;
-  return await getData<Demographic>(endpoint);
+  return await getData<DemographicsData>(endpoint);
 }
 
 export async function getIntro(city: City) {

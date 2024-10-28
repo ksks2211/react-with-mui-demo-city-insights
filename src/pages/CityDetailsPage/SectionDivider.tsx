@@ -10,7 +10,7 @@ const SectionDivider = React.forwardRef<
   SectionDividerHandle,
   SectionDividerProps
 >(({ title, children, size = "md" }, ref) => {
-  const moveToRef = useRef<HTMLSpanElement>(null);
+  const moveToRef = useRef<HTMLDivElement>(null);
 
   const accentColor = useCssVariableColor("--accent-color");
   const headerHeight = useCssVariableColor("--header-height");
@@ -28,9 +28,15 @@ const SectionDivider = React.forwardRef<
     },
     readTop: () => {
       if (moveToRef.current) {
-        // 요소의 절대 위치를 계산하여 스크롤
         const { top } = moveToRef.current.getBoundingClientRect();
         return top;
+      }
+      return 0;
+    },
+    readBottom: () => {
+      if (moveToRef.current) {
+        const { bottom } = moveToRef.current.getBoundingClientRect();
+        return bottom;
       }
       return 0;
     },
@@ -40,18 +46,16 @@ const SectionDivider = React.forwardRef<
   }));
 
   return (
-    <>
-      <span ref={moveToRef} />
+    <div ref={moveToRef}>
       <LazyMountEnhancer height={MIN_HEIGHT} threshold={0.5} key={title}>
         <StyledSection sx={sx}>
           <h2 className="section-title">
             <span>{title}</span>
           </h2>
-
           <div className="section-content">{children}</div>
         </StyledSection>
       </LazyMountEnhancer>
-    </>
+    </div>
   );
 });
 

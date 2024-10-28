@@ -31,3 +31,7 @@ export type IntroData = {
   description: string;
   coord: Coordinates;
 };
+
+export type DemographicsData = {
+  demographics: [{ Year: number; Population: number }];
+};
