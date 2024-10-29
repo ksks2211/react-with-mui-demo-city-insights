@@ -1,11 +1,28 @@
-import { formatNumberWithCommas } from "@utils/numberUtils";
+import { Box } from "@mui/material";
+import SuspenseLoader from "components/containers/SuspenseLoader";
 import QueryGuard from "components/guards/QueryGuard";
 import { useGetDemographicsOfCity } from "hooks";
+import { lazy } from "react";
 import type { City, DemographicsData } from "shared/types";
+
+const DemographicsLineGraph = lazy(
+  () => import("../../../components/containers/DemographicsLineGraph.tsx")
+);
 
 interface DemographicsProps {
   city: City;
 }
+
+const graphBoxStyles = {
+  width: {
+    xs: "90%",
+    sm: "60%",
+    md: "70%",
+    xl: "50%",
+  },
+  height: 450,
+  padding: "2rem 1rem 1rem 0",
+};
 
 function Demographics({
   city,
@@ -14,14 +31,25 @@ function Demographics({
   const { demographics } = data;
 
   return (
-    <div>
-      city : {city}
-      {demographics.map((pop) => (
-        <div key={pop.Year}>
-          {pop.Year} : {formatNumberWithCommas(pop.Population)}
-        </div>
-      ))}
-    </div>
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      marginTop="1rem"
+    >
+      <Box sx={graphBoxStyles}>
+        <SuspenseLoader
+          children={
+            <DemographicsLineGraph
+              populations={demographics}
+              city={city}
+              height="100%"
+              width="100%"
+            />
+          }
+        />
+      </Box>
+    </Box>
   );
 }
 
