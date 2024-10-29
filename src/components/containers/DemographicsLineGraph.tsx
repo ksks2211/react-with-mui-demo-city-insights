@@ -20,6 +20,10 @@ const populationFormatter = (value: number) => {
   return (value / 1_000_000).toFixed(1) + "M";
 };
 
+const tickFormatter = (tick: unknown) => `${tick}`;
+
+const domain = ["auto", "auto"];
+
 type PopulationAndYear = {
   Year: number;
   Population: number;
@@ -44,8 +48,8 @@ export default function DemographicsLineGraph({
           dataKey="Year"
           type="number"
           scale="linear"
-          domain={["auto", "auto"]}
-          tickFormatter={(tick) => `${tick}`}
+          domain={domain}
+          tickFormatter={tickFormatter}
         />
         <YAxis dataKey="Population" tickFormatter={populationFormatter} />
         <Tooltip formatter={numberFormatter} />
