@@ -5,7 +5,7 @@ import SuspenseLoader from "components/containers/SuspenseLoader.tsx";
 import LoadingBox from "components/presentational/LoadingBox";
 
 import { useScrollY, useSelectedCity, useTocNavigation } from "hooks";
-import React, { lazy, useCallback, useEffect, useRef } from "react";
+import { lazy, useCallback, useEffect, useRef } from "react";
 import type { City } from "shared/types";
 import SectionDivider from "./SectionDivider";
 import type { SectionDividerHandle } from "./types";
@@ -40,8 +40,7 @@ function CityDetailsPage({ city }: { city: City }) {
     if (!sectionRefs.current) return;
 
     for (const [title, handler] of Object.entries(sectionRefs.current)) {
-      const top = handler.readTop();
-      const bottom = handler.readBottom();
+      const { top, bottom } = handler.readTopAndBottom();
 
       if (top > 20 && top < (window.innerHeight * 2) / 5) {
         setFocusedSection(title);
@@ -94,8 +93,6 @@ function CityDetailsPage({ city }: { city: City }) {
   );
 }
 
-const CityDetailsPageWithMemo = React.memo(CityDetailsPage);
-
 export default function CityDetailsPageWithGuard() {
   const { city } = useSelectedCity();
 
@@ -103,5 +100,5 @@ export default function CityDetailsPageWithGuard() {
     return <LoadingBox />;
   }
 
-  return <CityDetailsPageWithMemo city={city} />;
+  return <CityDetailsPage city={city} />;
 }

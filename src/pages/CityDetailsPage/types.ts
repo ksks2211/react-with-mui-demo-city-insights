@@ -2,8 +2,7 @@ import { BoxProps } from "@mui/system";
 
 export interface SectionDividerHandle {
   moveTo: () => void;
-  readTop: () => number;
-  readBottom: () => number;
+  readTopAndBottom: () => { top: number; bottom: number };
   getTitle: () => string;
 }
 export interface SectionDividerProps extends BoxProps {

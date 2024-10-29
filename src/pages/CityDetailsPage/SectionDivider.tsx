@@ -26,19 +26,12 @@ const SectionDivider = React.forwardRef<
         window.scrollTo({ top: absoluteTop, behavior: "smooth" });
       }
     },
-    readTop: () => {
+    readTopAndBottom: () => {
       if (moveToRef.current) {
-        const { top } = moveToRef.current.getBoundingClientRect();
-        return top;
+        const { bottom, top } = moveToRef.current.getBoundingClientRect();
+        return { bottom, top };
       }
-      return 0;
-    },
-    readBottom: () => {
-      if (moveToRef.current) {
-        const { bottom } = moveToRef.current.getBoundingClientRect();
-        return bottom;
-      }
-      return 0;
+      return { bottom: 0, top: 0 };
     },
     getTitle: () => {
       return title;
