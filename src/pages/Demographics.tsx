@@ -9,7 +9,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { Demographic } from "shared/types";
+import { DemographicsData } from "shared/types";
 
 // Line Graph 넣기
 
@@ -17,12 +17,12 @@ import { Demographic } from "shared/types";
 // Table 라이브러리
 
 interface DemographicsProps {
-  data: Demographic;
+  data: DemographicsData;
 }
 
 function Demographics({ data }: DemographicsProps) {
-  const { populations } = data;
-  const { startAt, endAt } = extractStartAndEnd(map(populations, "Year"));
+  const { demographics } = data;
+  const { startAt, endAt } = extractStartAndEnd(map(demographics, "Year"));
   const { openModal, isModalVisible, closeModal, setIsUserTriggered } =
     useModal();
   useLockBodyScroll(isModalVisible);
@@ -55,7 +55,7 @@ function Demographics({ data }: DemographicsProps) {
       <h1>
         Population of Seoul ({startAt} ~ {endAt})
       </h1>
-      {populations.map((pop) => (
+      {demographics.map((pop) => (
         <div key={pop.Year}>
           {pop.Year} : {formatNumberWithCommas(pop.Population)}
         </div>
