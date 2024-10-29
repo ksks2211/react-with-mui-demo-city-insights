@@ -15,12 +15,15 @@ interface DemographicsProps {
 
 const graphBoxStyles = {
   width: {
-    xs: "90%",
+    xs: "100%",
     sm: "60%",
     md: "70%",
     xl: "50%",
   },
-  height: 450,
+  height: {
+    xs: 350,
+    sm: 450,
+  },
   padding: "2rem 1rem 1rem 0",
 };
 
