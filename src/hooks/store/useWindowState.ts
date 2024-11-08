@@ -12,7 +12,7 @@ export function useScrollY() {
   return { scrollY };
 }
 
-export function useListenScrollY(wait = 250) {
+export function useListenScrollY(wait = 500) {
   const dispatch = useDispatch();
   useEffect(() => {
     const handleScrollY = throttle(() => {

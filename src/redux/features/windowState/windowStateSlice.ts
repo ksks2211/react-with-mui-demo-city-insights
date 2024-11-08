@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface WindowState {
   scrollY: number;
   scrollBarWidth: number;
+  direction: "up" | "down";
 }
 
 export const initialState: WindowState = {
   scrollY: 0,
   scrollBarWidth: 0,
+  direction: "down",
 };
 
 const windowStateSlice = createSlice({
@@ -15,6 +17,11 @@ const windowStateSlice = createSlice({
   initialState,
   reducers: {
     setScrollY: (state, action: PayloadAction<number>) => {
+      if (state.scrollY > action.payload) {
+        state.direction = "up";
+      } else if (state.scrollY < action.payload) {
+        state.direction = "down";
+      }
       state.scrollY = action.payload;
     },
     setScrollBarWidth: (state, action: PayloadAction<number>) => {

@@ -1,7 +1,8 @@
 import { extractNumber } from "@utils/numberUtils";
 import LazyMountEnhancer from "components/enhancers/LazyMountEnhancer";
-import { useCssVariableColor } from "hooks";
-import React, { useImperativeHandle, useRef } from "react";
+import { useCssVariableColor, useTocNavigation } from "hooks";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
+import { useInView } from "react-intersection-observer";
 import { getSectionStyles, MIN_HEIGHT } from "./constants";
 import { StyledSection } from "./styled";
 import type { SectionDividerHandle, SectionDividerProps } from "./types";
@@ -11,11 +12,23 @@ const SectionDivider = React.forwardRef<
   SectionDividerProps
 >(({ title, children, size = "md" }, ref) => {
   const moveToRef = useRef<HTMLDivElement>(null);
+  const { setFocusedSection } = useTocNavigation();
 
   const accentColor = useCssVariableColor("--accent-color");
   const headerHeight = useCssVariableColor("--header-height");
 
   const sx = getSectionStyles(size, accentColor);
+
+  const { ref: inViewRef, inView } = useInView({
+    threshold: 0,
+    rootMargin: `-0px 0px -40% 0px`,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      setFocusedSection(title);
+    }
+  }, [inView, setFocusedSection, title]);
 
   useImperativeHandle(ref, () => ({
     moveTo: () => {
@@ -26,13 +39,7 @@ const SectionDivider = React.forwardRef<
         window.scrollTo({ top: absoluteTop, behavior: "smooth" });
       }
     },
-    readTopAndBottom: () => {
-      if (moveToRef.current) {
-        const { bottom, top } = moveToRef.current.getBoundingClientRect();
-        return { bottom, top };
-      }
-      return { bottom: 0, top: 0 };
-    },
+
     getTitle: () => {
       return title;
     },
@@ -41,7 +48,7 @@ const SectionDivider = React.forwardRef<
   return (
     <div ref={moveToRef}>
       <LazyMountEnhancer height={MIN_HEIGHT} threshold={0.5} key={title}>
-        <StyledSection sx={sx}>
+        <StyledSection sx={sx} ref={inViewRef}>
           <h2 className="section-title">
             <span>{title}</span>
           </h2>

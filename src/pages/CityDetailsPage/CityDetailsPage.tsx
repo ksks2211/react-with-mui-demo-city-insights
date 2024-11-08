@@ -4,7 +4,7 @@ import GiscusComments from "components/containers/GiscusComments";
 import SuspenseLoader from "components/containers/SuspenseLoader.tsx";
 import LoadingBox from "components/presentational/LoadingBox";
 
-import { useScrollY, useSelectedCity, useTocNavigation } from "hooks";
+import { useSelectedCity, useTocNavigation } from "hooks";
 import { lazy, useCallback, useEffect, useRef } from "react";
 import type { City } from "shared/types";
 import SectionDivider from "./SectionDivider";
@@ -18,9 +18,8 @@ const Demographics = lazy(
 function CityDetailsPage({ city }: { city: City }) {
   const sectionRefs = useRef<{ [key: string]: SectionDividerHandle }>({});
   const { tocRef, setFocusedSection } = useTocNavigation();
-  const { scrollY } = useScrollY();
 
-  // attach moveTo function to context (eventually sidebar)
+  // attach moveTo function to context for sidebar toc
   useEffect(() => {
     const moveTo = (key: string) => {
       if (sectionRefs.current && sectionRefs.current[key]) {
@@ -34,26 +33,6 @@ function CityDetailsPage({ city }: { city: City }) {
       tocRef.current = null;
     };
   }, [tocRef]);
-
-  // on scroll detect section in the main zone
-  useEffect(() => {
-    if (!sectionRefs.current) return;
-
-    for (const [title, handler] of Object.entries(sectionRefs.current)) {
-      const { top, bottom } = handler.readTopAndBottom();
-
-      if (top > 20 && top < (window.innerHeight * 2) / 5) {
-        setFocusedSection(title);
-        break;
-      } else if (
-        bottom > (window.innerHeight * 3) / 5 &&
-        bottom < window.innerHeight
-      ) {
-        setFocusedSection(title);
-        break;
-      }
-    }
-  }, [scrollY, setFocusedSection]);
 
   useEffect(() => {
     setFocusedSection(city ? toTitleCase(city) : null);
